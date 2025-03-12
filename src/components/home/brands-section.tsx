@@ -1,19 +1,20 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function BrandsSection() {
   const brands = [
-    { name: 'Louis Vuitton', slug: 'louis-vuitton', color: 'from-amber-500 to-amber-700' },
-    { name: 'Chanel', slug: 'chanel', color: 'from-stone-800 to-stone-950' },
-    { name: 'Hermes', slug: 'hermes', color: 'from-orange-500 to-orange-700' },
-    { name: 'Air Jordan', slug: 'air-jordan', color: 'from-red-500 to-red-700' },
-    { name: 'Nike', slug: 'nike', color: 'from-blue-500 to-blue-700' },
-    { name: 'Dior', slug: 'dior', color: 'from-indigo-500 to-indigo-700' },
-    { name: 'Gucci', slug: 'gucci', color: 'from-green-500 to-green-700' },
-    { name: 'Prada', slug: 'prada', color: 'from-stone-500 to-stone-700' },
-    { name: 'Balenciaga', slug: 'balenciaga', color: 'from-gray-500 to-gray-700' },
-    { name: 'Fendi', slug: 'fendi', color: 'from-yellow-500 to-yellow-700' },
-    { name: 'Adidas', slug: 'adidas', color: 'from-blue-400 to-blue-600' },
-    { name: 'Yeezy', slug: 'yeezy', color: 'from-stone-400 to-stone-600' },
+    { name: 'Louis Vuitton', slug: 'louis-vuitton', logo: '/logos/louis_vuitton_logo.png' },
+    { name: 'Chanel', slug: 'chanel', logo: '/logos/chanel_logo.png' },
+    { name: 'Hermes', slug: 'hermes', logo: '/logos/hermes_logo.png' },
+    { name: 'Air Jordan', slug: 'air-jordan', logo: '/logos/air_jordan_logo.png' },
+    { name: 'Nike', slug: 'nike', logo: '/logos/nike_logo.png' },
+    { name: 'Dior', slug: 'dior', logo: '/logos/dior_logo.png' },
+    { name: 'Gucci', slug: 'gucci', logo: '/logos/gucci_logo.png' },
+    { name: 'Prada', slug: 'prada', logo: '/logos/prada_logo.png' },
+    { name: 'Balenciaga', slug: 'balenciaga', logo: '/logos/balenciaga_logo.png' },
+    { name: 'Fendi', slug: 'fendi', logo: '/logos/fendi_logo.png' },
+    { name: 'Adidas', slug: 'adidas', logo: '/logos/adidas_logo.png' },
+    { name: 'Yeezy', slug: 'yeezy', logo: '/logos/yeezy_logo.png' },
   ];
 
   return (
@@ -41,14 +42,18 @@ export function BrandsSection() {
               href={`/what-we-authenticate/${brand.slug}`}
               className="group"
             >
-              <div className={`bg-gradient-to-br ${brand.color} rounded-xl shadow-lg p-6 text-center h-full flex flex-col items-center justify-center border border-white/10 backdrop-blur-sm hover:scale-105 transition-all duration-300`}>
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 group-hover:bg-white/30 transition-all">
-                  <div className="text-2xl font-bold text-white">
-                    {brand.name.charAt(0)}
-                  </div>
+              <div className={`bg-gradient-to-br from-stone-800/80 to-stone-900/80 rounded-xl shadow-lg p-6 text-center h-full flex flex-col items-center justify-center border border-white/10 backdrop-blur-sm hover:scale-105 transition-all duration-300`}>
+                <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-white/20 transition-all p-2">
+                  <Image 
+                    src={brand.logo} 
+                    alt={brand.name} 
+                    width={48} 
+                    height={48}
+                    className="object-contain"
+                  />
                 </div>
                 <h3 className="text-lg font-medium text-white group-hover:text-white/90">
-                  Authenticate {brand.name}
+                  {brand.name}
                 </h3>
               </div>
             </Link>

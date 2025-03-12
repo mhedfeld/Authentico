@@ -9,35 +9,35 @@ export default function WhatWeAuthenticatePage() {
     {
       name: "Luxury Fashion",
       brands: [
-        { name: "Louis Vuitton", slug: "louis-vuitton", items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes"] },
-        { name: "Chanel", slug: "chanel", items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes", "Jewelry"] },
-        { name: "Hermes", slug: "hermes", items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes"] },
-        { name: "Gucci", slug: "gucci", items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes"] },
-        { name: "Prada", slug: "prada", items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes"] },
-        { name: "Dior", slug: "dior", items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes", "Jewelry"] },
-        { name: "Balenciaga", slug: "balenciaga", items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes"] },
-        { name: "Fendi", slug: "fendi", items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes"] }
+        { name: "Louis Vuitton", slug: "louis-vuitton", logo: '/logos/louis_vuitton_logo.png', items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes"] },
+        { name: "Chanel", slug: "chanel", logo: '/logos/chanel_logo.png', items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes", "Jewelry"] },
+        { name: "Hermes", slug: "hermes", logo: '/logos/hermes_logo.png', items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes"] },
+        { name: "Gucci", slug: "gucci", logo: '/logos/gucci_logo.png', items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes"] },
+        { name: "Prada", slug: "prada", logo: '/logos/prada_logo.png', items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes"] },
+        { name: "Dior", slug: "dior", logo: '/logos/dior_logo.png', items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes", "Jewelry"] },
+        { name: "Balenciaga", slug: "balenciaga", logo: '/logos/balenciaga_logo.png', items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes"] },
+        { name: "Fendi", slug: "fendi", logo: '/logos/fendi_logo.png', items: ["Handbags", "Wallets", "Accessories", "Clothing", "Shoes"] }
       ]
     },
     {
       name: "Sportswear & Sneakers",
       brands: [
-        { name: "Nike", slug: "nike", items: ["Sneakers", "Clothing", "Accessories"] },
-        { name: "Air Jordan", slug: "air-jordan", items: ["Sneakers", "Clothing"] },
-        { name: "Adidas", slug: "adidas", items: ["Sneakers", "Clothing", "Accessories"] },
-        { name: "Yeezy", slug: "yeezy", items: ["Sneakers", "Clothing"] },
-        { name: "New Balance", slug: "new-balance", items: ["Sneakers"] },
-        { name: "Converse", slug: "converse", items: ["Sneakers"] }
+        { name: "Nike", slug: "nike", logo: '/logos/nike_logo.png', items: ["Sneakers", "Clothing", "Accessories"] },
+        { name: "Air Jordan", slug: "air-jordan", logo: '/logos/air_jordan_logo.png', items: ["Sneakers", "Clothing"] },
+        { name: "Adidas", slug: "adidas", logo: '/logos/adidas_logo.png', items: ["Sneakers", "Clothing", "Accessories"] },
+        { name: "Yeezy", slug: "yeezy", logo: '/logos/yeezy_logo.png', items: ["Sneakers", "Clothing"] },
+        { name: "New Balance", slug: "new-balance", logo: '/logos/new_balance_logo.png', items: ["Sneakers"] },
+        { name: "Converse", slug: "converse", logo: '/logos/converse_logo.png', items: ["Sneakers"] }
       ]
     },
     {
       name: "Watches & Jewelry",
       brands: [
-        { name: "Rolex", slug: "rolex", items: ["Watches"] },
-        { name: "Omega", slug: "omega", items: ["Watches"] },
-        { name: "Cartier", slug: "cartier", items: ["Watches", "Jewelry"] },
-        { name: "Patek Philippe", slug: "patek-philippe", items: ["Watches"] },
-        { name: "Audemars Piguet", slug: "audemars-piguet", items: ["Watches"] }
+        { name: "Rolex", slug: "rolex", logo: '/logos/rolex_logo.png', items: ["Watches"] },
+        { name: "Omega", slug: "omega", logo: '/logos/omega_logo.png', items: ["Watches"] },
+        { name: "Cartier", slug: "cartier", logo: '/logos/cartier_logo.png', items: ["Watches", "Jewelry"] },
+        { name: "Patek Philippe", slug: "patek-philippe", logo: '/logos/patek_philippe_logo.png', items: ["Watches"] },
+        { name: "Audemars Piguet", slug: "audemars-piguet", logo: '/logos/audemars_piguet_logo.png', items: ["Watches"] }
       ]
     }
   ];
@@ -91,7 +91,18 @@ export default function WhatWeAuthenticatePage() {
                   className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 overflow-hidden hover:bg-white/15 transition-all hover:shadow-lg hover:shadow-amber-500/5 hover:-translate-y-1"
                 >
                   <div className="p-6">
-                    <h3 className="text-xl font-bold mb-4">{brand.name}</h3>
+                    <div className="flex items-center mb-4">
+                      <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mr-4 p-2">
+                        <Image 
+                          src={brand.logo} 
+                          alt={brand.name} 
+                          width={32} 
+                          height={32}
+                          className="object-contain"
+                        />
+                      </div>
+                      <h3 className="text-xl font-bold">{brand.name}</h3>
+                    </div>
                     <div className="space-y-2 mb-6">
                       <p className="text-sm text-stone-400">We authenticate:</p>
                       <ul className="text-stone-300 text-sm space-y-1">
