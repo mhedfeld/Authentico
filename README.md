@@ -1,4 +1,4 @@
-# LEGIT APP Clone
+# AUTHENTICO LUXURY COUNTERFEIT DETECTION 
 
 A modern web application for luxury item authentication built with Next.js 14, Tailwind CSS, and shadcn/ui.
 
