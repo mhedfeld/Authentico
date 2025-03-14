@@ -1,81 +1,203 @@
+"use client";
+
 import Link from 'next/link';
 import { Camera, Users, FileCheck } from 'lucide-react';
+import { useState } from 'react';
+import Image from 'next/image';
 
 export function HowItWorksSection() {
+  const [activeStep, setActiveStep] = useState(1);
+
   const steps = [
     {
       number: 1,
       title: 'Submit Photos',
       description: 'Choose your desired turnaround time and capture clear product photos according to our easy-to-follow guidelines.',
-      icon: <Camera className="h-10 w-10 text-amber-400" />,
-      gradient: 'from-amber-500/20 to-amber-700/20'
+      icon: <Camera className="h-10 w-10 text-[#C6AC8E]" />,
+      image: '/how-it-works/submit-photos.jpg'
     },
     {
       number: 2,
       title: 'Expert Review',
       description: 'Two or more expert authenticators with AI meticulously analyzes your photos in our multi-layered process.',
-      icon: <Users className="h-10 w-10 text-blue-400" />,
-      gradient: 'from-blue-500/20 to-blue-700/20'
+      icon: <Users className="h-10 w-10 text-[#C6AC8E]" />,
+      image: '/how-it-works/expert-review.jpg'
     },
     {
       number: 3,
       title: 'Receive Results',
       description: 'Get a clear and concise verdict: AUTHENTIC or REPLICA with a FREE digital certificate as proof.',
-      icon: <FileCheck className="h-10 w-10 text-green-400" />,
-      gradient: 'from-green-500/20 to-green-700/20'
+      icon: <FileCheck className="h-10 w-10 text-[#C6AC8E]" />,
+      image: '/how-it-works/receive-results.jpg'
     }
   ];
 
   return (
-    <section className="py-20 bg-stone-900 relative overflow-hidden">
+    <section className="py-32 bg-[#F8F5F0] relative overflow-hidden">
+      {/* Luxury pattern overlay */}
+      <div className="absolute inset-0 bg-[url('/luxury-pattern-light.png')] bg-repeat opacity-5"></div>
+      
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-        <div className="absolute top-[200px] left-[200px] w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[150px]"></div>
-        <div className="absolute bottom-[100px] right-[100px] w-[400px] h-[400px] rounded-full bg-purple-500/10 blur-[150px]"></div>
+        <div className="absolute top-[200px] left-[200px] w-[500px] h-[500px] rounded-full bg-[#C6AC8E]/5 blur-[150px]"></div>
+        <div className="absolute bottom-[100px] right-[100px] w-[400px] h-[400px] rounded-full bg-[#5E503F]/5 blur-[150px]"></div>
       </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <h3 className="text-amber-400 text-lg font-semibold uppercase tracking-wider mb-3">
-            How It Works
+        <div className="flex flex-col items-center mb-20">
+          {/* Decorative element */}
+          <div className="w-[1px] h-20 bg-gradient-to-b from-transparent via-[#C6AC8E] to-transparent mb-8"></div>
+          
+          <h3 className="text-[#C6AC8E] text-lg font-medium uppercase tracking-[0.25em] mb-4">
+            The Experience
           </h3>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]">
-            Your Guide to Easy Authentication
+          
+          <h2 className="text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-8 text-center max-w-3xl">
+            Effortless Authentication <span className="text-[#C6AC8E]">Process</span>
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-xl text-stone-300">
-            Authenticating your luxury items has never been easier. With LEGIT APP, you can get expert results in as little as 10 minutes.
+          
+          <div className="h-[1px] w-40 bg-gradient-to-r from-transparent via-[#C6AC8E] to-transparent mb-8"></div>
+          
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-[#5E503F] text-center leading-relaxed">
+            Experience our seamless three-step authentication journey, delivering expert verification with unparalleled elegance and precision.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-          {/* Connecting line between steps */}
-          <div className="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-blue-500 to-green-500 transform -translate-y-1/2 z-0"></div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* Left side: Interactive steps */}
+          <div className="space-y-8">
+            {steps.map((step) => (
+              <div 
+                key={step.number}
+                className={`group relative cursor-pointer transition-all duration-500 ease-in-out ${
+                  activeStep === step.number 
+                    ? 'scale-105' 
+                    : 'opacity-70 hover:opacity-90'
+                }`}
+                onClick={() => setActiveStep(step.number)}
+              >
+                <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-[#C6AC8E]/30 to-transparent"></div>
+                
+                <div className="flex items-start pl-8 relative">
+                  {/* Step number */}
+                  <div className={`absolute left-[-15px] top-0 w-8 h-8 rounded-full flex items-center justify-center border transition-all duration-500 ${
+                    activeStep === step.number 
+                      ? 'border-[#C6AC8E] bg-[#C6AC8E]/10' 
+                      : 'border-[#C6AC8E]/30 bg-white'
+                  }`}>
+                    <span className={`font-serif text-lg ${
+                      activeStep === step.number 
+                        ? 'text-[#C6AC8E]' 
+                        : 'text-[#C6AC8E]/70'
+                    }`}>
+                      {step.number}
+                    </span>
+                  </div>
+                  
+                  <div className="ml-4">
+                    <div className="flex items-center mb-3">
+                      <div className={`p-2 rounded-full transition-all duration-500 ${
+                        activeStep === step.number 
+                          ? 'bg-[#C6AC8E]/10' 
+                          : 'bg-white'
+                      }`}>
+                        {step.icon}
+                      </div>
+                      <h3 className={`text-2xl font-medium ml-3 transition-all duration-500 ${
+                        activeStep === step.number 
+                          ? 'text-[#1A1A1A]' 
+                          : 'text-[#1A1A1A]/70'
+                      }`}>
+                        {step.title}
+                      </h3>
+                    </div>
+                    
+                    <div className={`h-[1px] w-full bg-gradient-to-r from-[#C6AC8E]/50 to-transparent mb-4 transition-all duration-500 ${
+                      activeStep === step.number 
+                        ? 'opacity-100' 
+                        : 'opacity-30'
+                    }`}></div>
+                    
+                    <p className={`text-lg leading-relaxed transition-all duration-500 ${
+                      activeStep === step.number 
+                        ? 'text-[#5E503F]' 
+                        : 'text-[#5E503F]/70'
+                    }`}>
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+            
+            <div className="pt-8">
+              <Link 
+                href="/products"
+                className="inline-flex items-center px-8 py-4 bg-white border border-[#C6AC8E]/70 text-[#C6AC8E] rounded-md hover:bg-[#C6AC8E]/5 transition-all duration-300 text-lg font-medium group shadow-sm"
+              >
+                Explore Our Process
+                <svg className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+              </Link>
+            </div>
+          </div>
           
-          {steps.map((step, index) => (
-            <div key={step.number} className="relative z-10">
-              <div className={`bg-stone-800/80 backdrop-blur-md rounded-xl border border-white/10 p-8 h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-2 ${index === 1 ? 'md:translate-y-8' : ''}`}>
-                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-stone-900 to-stone-800 w-12 h-12 rounded-full flex items-center justify-center border-2 border-amber-500 shadow-lg shadow-amber-500/20">
-                  <span className="text-amber-400 font-bold">{step.number}</span>
+          {/* Right side: Visual representation */}
+          <div className="relative">
+            <div className="aspect-[4/5] relative rounded-md overflow-hidden shadow-xl">
+              {/* Decorative frame */}
+              <div className="absolute inset-0 border border-[#C6AC8E]/20 z-20 pointer-events-none"></div>
+              <div className="absolute inset-[1px] border border-[#C6AC8E]/10 z-20 pointer-events-none"></div>
+              
+              {/* Images */}
+              {steps.map((step) => (
+                <div 
+                  key={step.number}
+                  className={`absolute inset-0 transition-opacity duration-1000 ${
+                    activeStep === step.number ? 'opacity-100' : 'opacity-0'
+                  }`}
+                >
+                  <Image
+                    src={step.image}
+                    alt={step.title}
+                    fill
+                    className="object-cover"
+                  />
+                  
+                  {/* Image overlay gradient - lighter for light theme */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/30 via-transparent to-transparent"></div>
                 </div>
-                
-                <div className={`bg-gradient-to-br ${step.gradient} rounded-full p-4 inline-block mb-6 mt-4`}>
-                  {step.icon}
-                </div>
-                
-                <h3 className="text-xl font-bold text-white mb-4">{step.title}</h3>
-                <p className="text-stone-300">{step.description}</p>
+              ))}
+              
+              {/* Luxury corner accents */}
+              <div className="absolute top-0 left-0 w-16 h-16 border-t border-l border-[#C6AC8E]/30 pointer-events-none"></div>
+              <div className="absolute top-0 right-0 w-16 h-16 border-t border-r border-[#C6AC8E]/30 pointer-events-none"></div>
+              <div className="absolute bottom-0 left-0 w-16 h-16 border-b border-l border-[#C6AC8E]/30 pointer-events-none"></div>
+              <div className="absolute bottom-0 right-0 w-16 h-16 border-b border-r border-[#C6AC8E]/30 pointer-events-none"></div>
+              
+              {/* Step indicator */}
+              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
+                {steps.map((step) => (
+                  <button
+                    key={step.number}
+                    onClick={() => setActiveStep(step.number)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      activeStep === step.number 
+                        ? 'bg-[#C6AC8E] scale-150' 
+                        : 'bg-white/80 hover:bg-white'
+                    }`}
+                    aria-label={`View step ${step.number}: ${step.title}`}
+                  />
+                ))}
               </div>
             </div>
-          ))}
-        </div>
-
-        <div className="mt-16 text-center">
-          <Link 
-            href="/products"
-            className="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-xl hover:bg-white/20 transition-all duration-300 text-lg font-medium"
-          >
-            Learn More About Our Process
-          </Link>
+            
+            {/* Floating badge */}
+            <div className="absolute -top-6 -right-6 bg-white border border-[#C6AC8E]/70 rounded-full px-6 py-3 shadow-xl">
+              <span className="text-[#C6AC8E] font-medium">Premium Service</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
