@@ -21,7 +21,7 @@ export function Footer() {
             <Link href="/" className="inline-block mb-6">
               <div className="flex items-center">
                 <Image 
-                  src="/logo.png" 
+                  src="/logos/authentico-logo.png" 
                   alt="Authentico" 
                   width={40} 
                   height={40} 

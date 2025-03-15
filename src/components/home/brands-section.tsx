@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { LuxuryPattern } from '@/components/ui/luxury-pattern';
 
 export function BrandsSection() {
   const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
@@ -43,8 +44,8 @@ export function BrandsSection() {
 
   return (
     <section id="brands-section" className="py-24 bg-gradient-to-b from-white to-[#F8F5F0] relative overflow-hidden">
-      {/* Luxury pattern overlay */}
-      <div className="absolute inset-0 bg-[url('/luxury-pattern-light.png')] bg-repeat opacity-5"></div>
+      {/* Replace the direct pattern div with the LuxuryPattern component */}
+      <LuxuryPattern opacity={5} />
       
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
@@ -78,7 +79,6 @@ export function BrandsSection() {
             </p>
           </div>
         </div>
-
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {brands.map((brand, index) => (
             <Link 

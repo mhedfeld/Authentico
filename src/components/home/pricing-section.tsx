@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { CheckCircle2 } from 'lucide-react';
+import { LuxuryPattern } from '@/components/ui/luxury-pattern';
 
 export function PricingSection() {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -60,8 +61,8 @@ export function PricingSection() {
 
   return (
     <section className="py-32 bg-gradient-to-b from-[#F8F5F0] to-white relative overflow-hidden">
-      {/* Luxury pattern overlay */}
-      <div className="absolute inset-0 bg-[url('/luxury-pattern-light.png')] bg-repeat opacity-5"></div>
+      {/* Replace the hardcoded pattern with LuxuryPattern component */}
+      <LuxuryPattern opacity={5} />
       
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
@@ -121,8 +122,7 @@ export function PricingSection() {
               </span>
             </button>
           </div>
-        </div>
-
+        </div>  
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {pricingPlans.map((plan, index) => (
             <div 
@@ -181,13 +181,16 @@ export function PricingSection() {
                 {/* Button */}
                 <Link 
                   href="/pricing"
-                  className={`w-full py-4 text-center rounded-md transition-all duration-300 ${
+                  className={`w-full py-4 text-center rounded-md transition-all duration-300 relative overflow-hidden group ${
                     plan.isPopular
                       ? 'bg-gradient-to-r from-[#C6AC8E] to-[#5E503F] text-white font-medium hover:shadow-lg hover:shadow-[#C6AC8E]/20'
                       : 'bg-white border border-[#C6AC8E]/70 text-[#5E503F] hover:bg-[#C6AC8E]/10 hover:border-[#C6AC8E] hover:text-[#5E503F]'
                   }`}
                 >
-                  {plan.buttonText}
+                  <span className="relative z-10">{plan.buttonText}</span>
+                  
+                  {/* Add shine effect to buttons */}
+                  <div className="absolute -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine"></div>
                 </Link>
                 
                 {/* Decorative corner elements */}
@@ -216,6 +219,19 @@ export function PricingSection() {
           </div>
         </div>
       </div>
+      
+      {/* Add shine animation if not already in global styles */}
+      <style jsx global>{`
+        @keyframes shine {
+          100% {
+            left: 125%;
+          }
+        }
+        
+        .animate-shine {
+          animation: shine 1.5s ease-in-out infinite;
+        }
+      `}</style>
     </section>
   );
 }

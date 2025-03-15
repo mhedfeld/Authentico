@@ -23,7 +23,7 @@ export function TestimonialsSection() {
       title: "Luxury Reseller",
       quote: "Authentico has transformed my business. Their authentication certificates give my clients complete confidence when purchasing high-value designer bags. The quick turnaround time is impressive.",
       avatar: "/testimonials/sophia.jpg",
-      logo: "/brands/vogue.svg",
+      logo: "/brands/vogue.png",
       source: "Featured in Vogue",
       rating: 5
     },
@@ -41,7 +41,7 @@ export function TestimonialsSection() {
       title: "Fashion Influencer",
       quote: "Authentico is my secret weapon. In a world of replicas, I need to ensure every item I showcase is genuine. Their mobile app lets me verify items before I even leave the store.",
       avatar: "/testimonials/isabella.jpg",
-      logo: "/brands/elle.svg",
+      logo: "/brands/elle.png",
       source: "Elle Magazine",
       rating: 5
     },
@@ -50,7 +50,7 @@ export function TestimonialsSection() {
       title: "Vintage Watch Dealer",
       quote: "The level of detail in Authentico's reports is remarkable. Their experts identified subtle nuances in a vintage Rolex that even I had missed. Their service has become an essential part of my acquisition process.",
       avatar: "/testimonials/james.jpg",
-      logo: "/brands/hodinkee.svg",
+      logo: "/brands/hodinkee.png",
       source: "Hodinkee Partner",
       rating: 5
     }
@@ -235,19 +235,19 @@ export function TestimonialsSection() {
           
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
             <div className="opacity-50 hover:opacity-100 transition-opacity duration-300">
-              <Image src="/logos/vogue.svg" alt="Vogue" width={120} height={40} />
+              <Image src="/brands/vogue.png" alt="Vogue" width={120} height={40} />
             </div>
             <div className="opacity-50 hover:opacity-100 transition-opacity duration-300">
-              <Image src="/logos/hypebeast-logo.png" alt="Hypebeast" width={120} height={40} />
+              <Image src="/brands/hypebeast.svg" alt="Hypebeast" width={120} height={40} />
             </div>
             <div className="opacity-50 hover:opacity-100 transition-opacity duration-300">
-              <Image src="/logos/elle-logo.png" alt="Elle" width={120} height={40} />
+              <Image src="/brands/elle.png" alt="Elle" width={120} height={40} />
             </div>
             <div className="opacity-50 hover:opacity-100 transition-opacity duration-300">
-              <Image src="/brands/hodinkee.svg" alt="Hodinkee" width={120} height={40} />
+              <Image src="/brands/hodinkee.png" alt="Hodinkee" width={120} height={40} />
             </div>
             <div className="opacity-50 hover:opacity-100 transition-opacity duration-300">
-              <Image src="/brands/forbes.svg" alt="Forbes" width={120} height={40} />
+              <Image src="/brands/forbes.png" alt="Forbes" width={120} height={40} />
             </div>
           </div>
         </div>

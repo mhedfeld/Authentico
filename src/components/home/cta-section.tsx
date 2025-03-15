@@ -138,7 +138,7 @@ export function CTASection() {
             {/* Right side - Image */}
             <div className="relative h-[400px] md:h-auto overflow-hidden">
               <Image
-                src="/cta-image.jpg" // Replace with your luxury product image
+                src="/cta/cta-app-image.png" // Replace with your luxury product image
                 alt="Authentico Premium Authentication"
                 fill
                 className="object-cover"
@@ -176,10 +176,10 @@ export function CTASection() {
           {/* App store badges */}
           <div className="flex justify-center mt-8 space-x-6">
             <div className="opacity-60 hover:opacity-100 transition-opacity">
-              <Image src="/badges/app-store-badge.svg" alt="App Store" width={120} height={40} />
+              <Image src="/badges/app-store.svg" alt="App Store" width={120} height={40} />
             </div>
             <div className="opacity-60 hover:opacity-100 transition-opacity">
-              <Image src="/badges/google-play-badge.svg" alt="Google Play" width={120} height={40} />
+              <Image src="/badges/google-play.svg" alt="Google Play" width={120} height={40} />
             </div>
           </div>
         </div>

@@ -1,41 +1,116 @@
 "use client";
 
 import Link from 'next/link';
-import { Camera, Users, FileCheck } from 'lucide-react';
-import { useState } from 'react';
+import { Camera, Users, FileCheck, Play, Pause } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { LuxuryPattern } from '@/components/ui/luxury-pattern';
 
 export function HowItWorksSection() {
   const [activeStep, setActiveStep] = useState(1);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [autoAdvance, setAutoAdvance] = useState(true);
+  const videoRefs = useRef<Array<HTMLVideoElement | null>>([null, null, null]);
 
+  // Updated steps with video sources
   const steps = [
     {
       number: 1,
       title: 'Submit Photos',
       description: 'Choose your desired turnaround time and capture clear product photos according to our easy-to-follow guidelines.',
       icon: <Camera className="h-10 w-10 text-[#C6AC8E]" />,
-      image: '/how-it-works/submit-photos.jpg'
+      video: '/videos/submit-photos.mp4',
+      poster: '/how-it-works/submit-photos.jpg', // Fallback image for video poster
+      duration: "0:04" // Video duration display
     },
     {
       number: 2,
       title: 'Expert Review',
       description: 'Two or more expert authenticators with AI meticulously analyzes your photos in our multi-layered process.',
       icon: <Users className="h-10 w-10 text-[#C6AC8E]" />,
-      image: '/how-it-works/expert-review.jpg'
+      video: '/videos/expert-review.mp4',
+      poster: '/how-it-works/expert-review.jpg',
+      duration: "0:05"
     },
     {
       number: 3,
       title: 'Receive Results',
       description: 'Get a clear and concise verdict: AUTHENTIC or REPLICA with a FREE digital certificate as proof.',
       icon: <FileCheck className="h-10 w-10 text-[#C6AC8E]" />,
-      image: '/how-it-works/receive-results.jpg'
+      video: '/videos/receive-results.mp4',
+      poster: '/how-it-works/receive-results.jpg',
+      duration: "0:05"
     }
   ];
 
+  // Set up video playback and auto-advancement
+  useEffect(() => {
+    const currentVideo = videoRefs.current[activeStep - 1];
+    
+    // Reset all videos
+    videoRefs.current.forEach((video, index) => {
+      if (video) {
+        if (index + 1 !== activeStep) {
+          video.pause();
+          video.currentTime = 0;
+        }
+      }
+    });
+    
+    // Handle current video
+    if (currentVideo) {
+      // Add event listeners
+      const handleVideoEnd = () => {
+        if (autoAdvance) {
+          // Advance to next step or loop back to first
+          const nextStep = activeStep === steps.length ? 1 : activeStep + 1;
+          setActiveStep(nextStep);
+        }
+      };
+      
+      currentVideo.addEventListener('ended', handleVideoEnd);
+      
+      // Play or pause based on state
+      if (isPlaying) {
+        const playPromise = currentVideo.play();
+        
+        // Handle play promise (might be rejected if browser prevents autoplay)
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log("Autoplay prevented:", error);
+            setIsPlaying(false);
+          });
+        }
+      } else {
+        currentVideo.pause();
+      }
+      
+      // Clean up event listeners
+      return () => {
+        currentVideo.removeEventListener('ended', handleVideoEnd);
+      };
+    }
+  }, [activeStep, isPlaying, autoAdvance, steps.length]);
+
+  // Handle manual step change
+  const handleStepChange = (stepNumber: number) => {
+    setActiveStep(stepNumber);
+    setIsPlaying(true); // Auto-play when manually changing steps
+  };
+  
+  // Toggle play/pause
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+  
+  // Toggle auto-advance
+  const toggleAutoAdvance = () => {
+    setAutoAdvance(!autoAdvance);
+  };
+
   return (
     <section className="py-32 bg-[#F8F5F0] relative overflow-hidden">
-      {/* Luxury pattern overlay */}
-      <div className="absolute inset-0 bg-[url('/luxury-pattern-light.png')] bg-repeat opacity-5"></div>
+      <LuxuryPattern opacity={5} />
       
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
@@ -62,7 +137,6 @@ export function HowItWorksSection() {
             Experience our seamless three-step authentication journey, delivering expert verification with unparalleled elegance and precision.
           </p>
         </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left side: Interactive steps */}
           <div className="space-y-8">
@@ -74,7 +148,7 @@ export function HowItWorksSection() {
                     ? 'scale-105' 
                     : 'opacity-70 hover:opacity-90'
                 }`}
-                onClick={() => setActiveStep(step.number)}
+                onClick={() => handleStepChange(step.number)}
               >
                 <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-[#C6AC8E]/30 to-transparent"></div>
                 
@@ -133,55 +207,104 @@ export function HowItWorksSection() {
             <div className="pt-8">
               <Link 
                 href="/products"
-                className="inline-flex items-center px-8 py-4 bg-white border border-[#C6AC8E]/70 text-[#C6AC8E] rounded-md hover:bg-[#C6AC8E]/5 transition-all duration-300 text-lg font-medium group shadow-sm"
+                className="inline-flex items-center px-8 py-4 bg-white border border-[#C6AC8E]/70 text-[#C6AC8E] rounded-md hover:bg-[#C6AC8E]/5 transition-all duration-300 text-lg font-medium group shadow-sm overflow-hidden relative"
               >
-                Explore Our Process
-                <svg className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <span className="relative z-10">Explore Our Process</span>
+                <svg className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                 </svg>
+                {/* Add shine effect */}
+                <div className="absolute -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine"></div>
               </Link>
             </div>
           </div>
           
-          {/* Right side: Visual representation */}
+          {/* Right side: Video player */}
           <div className="relative">
-            <div className="aspect-[4/5] relative rounded-md overflow-hidden shadow-xl">
+            <div className="aspect-[4/5] relative rounded-md overflow-hidden shadow-xl bg-[#1A1A1A]/5">
               {/* Decorative frame */}
-              <div className="absolute inset-0 border border-[#C6AC8E]/20 z-20 pointer-events-none"></div>
-              <div className="absolute inset-[1px] border border-[#C6AC8E]/10 z-20 pointer-events-none"></div>
+              <div className="absolute inset-0 border border-[#C6AC8E]/20 z-30 pointer-events-none"></div>
+              <div className="absolute inset-[1px] border border-[#C6AC8E]/10 z-30 pointer-events-none"></div>
               
-              {/* Images */}
-              {steps.map((step) => (
+              {/* Videos */}
+              {steps.map((step, index) => (
                 <div 
                   key={step.number}
-                  className={`absolute inset-0 transition-opacity duration-1000 ${
-                    activeStep === step.number ? 'opacity-100' : 'opacity-0'
+                  className={`absolute inset-0 transition-opacity duration-700 ${
+                    activeStep === step.number ? 'opacity-100 z-20' : 'opacity-0 z-10'
                   }`}
                 >
-                  <Image
-                    src={step.image}
-                    alt={step.title}
-                    fill
-                    className="object-cover"
-                  />
+                  <video
+                ref={(el) => {
+                  videoRefs.current[index] = el;
+                }}
+                poster={step.poster}
+                playsInline
+                muted
+                className="absolute inset-0 w-full h-full object-cover"
+                >
+                    <source src={step.video} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                   
-                  {/* Image overlay gradient - lighter for light theme */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/30 via-transparent to-transparent"></div>
+                  {/* Video overlay gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/30 via-transparent to-transparent z-20 pointer-events-none"></div>
                 </div>
               ))}
               
-              {/* Luxury corner accents */}
-              <div className="absolute top-0 left-0 w-16 h-16 border-t border-l border-[#C6AC8E]/30 pointer-events-none"></div>
-              <div className="absolute top-0 right-0 w-16 h-16 border-t border-r border-[#C6AC8E]/30 pointer-events-none"></div>
-              <div className="absolute bottom-0 left-0 w-16 h-16 border-b border-l border-[#C6AC8E]/30 pointer-events-none"></div>
-              <div className="absolute bottom-0 right-0 w-16 h-16 border-b border-r border-[#C6AC8E]/30 pointer-events-none"></div>
+              {/* Video controls */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1A1A1A]/50 to-transparent p-6 z-30 flex justify-between items-center">
+                <div className="flex items-center">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      togglePlayPause();
+                    }}
+                    className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-md hover:bg-white transition-colors mr-4"
+                  >
+                    {isPlaying ? (
+                      <Pause className="h-5 w-5 text-[#C6AC8E] fill-[#C6AC8E]" />
+                    ) : (
+                      <Play className="h-5 w-5 text-[#C6AC8E] fill-[#C6AC8E] ml-0.5" />
+                    )}
+                  </button>
+                  
+                  <div className="text-white text-sm font-medium">
+                    Step {activeStep} • {steps[activeStep-1].duration}
+                  </div>
+                </div>
+                
+                <div className="flex items-center">
+                  <label className="text-white text-sm mr-2 cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      checked={autoAdvance} 
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        toggleAutoAdvance();
+                      }}
+                      className="mr-2 accent-[#C6AC8E]"
+                    />
+                    Auto-play next
+                  </label>
+                </div>
+              </div>
               
-              {/* Step indicator */}
-              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
+              {/* Luxury corner accents */}
+              <div className="absolute top-0 left-0 w-16 h-16 border-t border-l border-[#C6AC8E]/30 pointer-events-none z-30"></div>
+              <div className="absolute top-0 right-0 w-16 h-16 border-t border-r border-[#C6AC8E]/30 pointer-events-none z-30"></div>
+              <div className="absolute bottom-0 left-0 w-16 h-16 border-b border-l border-[#C6AC8E]/30 pointer-events-none z-30"></div>
+              <div className="absolute bottom-0 right-0 w-16 h-16 border-b border-r border-[#C6AC8E]/30 pointer-events-none z-30"></div>
+              
+              {/* Step indicators */}
+              <div className="absolute top-4 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
                 {steps.map((step) => (
                   <button
                     key={step.number}
-                    onClick={() => setActiveStep(step.number)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleStepChange(step.number);
+                    }}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
                       activeStep === step.number 
                         ? 'bg-[#C6AC8E] scale-150' 
@@ -200,6 +323,19 @@ export function HowItWorksSection() {
           </div>
         </div>
       </div>
+      
+      {/* Add shine animation if not already in global styles */}
+      <style jsx global>{`
+        @keyframes shine {
+          100% {
+            left: 125%;
+          }
+        }
+        
+        .animate-shine {
+          animation: shine 1.5s ease-in-out infinite;
+        }
+      `}</style>
     </section>
   );
 }

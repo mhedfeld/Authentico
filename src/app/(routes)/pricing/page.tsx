@@ -1,234 +1,553 @@
+"use client";
+
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Check, ShoppingBag, Watch, Footprints } from 'lucide-react';
+import Image from 'next/image';
+import { CheckCircle2, XCircle, HelpCircle, ChevronRight, ChevronDown, Shield, Clock, FileCheck } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { LuxuryPattern } from '@/components/ui/luxury-pattern';
 
 export default function PricingPage() {
-  // Pricing plans for different categories
-  const pricingCategories = [
+  // State management
+  const [isAnnual, setIsAnnual] = useState(false);
+  const [activeTab, setActiveTab] = useState('individual');
+  const [isComparisonExpanded, setIsComparisonExpanded] = useState(false);
+  const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
+  
+  // Animation states
+  const [isAnimating, setIsAnimating] = useState(false);
+  
+  // Create subtle animation on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const element = document.getElementById('pricing-cards');
+      if (element) {
+        const position = element.getBoundingClientRect();
+        if (position.top < window.innerHeight && position.bottom >= 0) {
+          setIsAnimating(true);
+        }
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check on initial render
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  // Define pricing plans
+  const individualPlans = [
     {
-      icon: <ShoppingBag className="h-10 w-10 text-amber-500" />,
-      title: "Luxury Handbags",
-      description: "Authentication for designer handbags, wallets, and accessories",
-      startingPrice: "10",
-      options: [
-        { time: "30 Minutes", price: "20" },
-        { time: "1 Hour", price: "15" },
-        { time: "4 Hours", price: "10" }
-      ],
+      name: "Standard",
+      description: "Perfect for occasional authentications",
+      monthlyPrice: 9.99,
+      annualPrice: 99.99,
+      savings: 19.89,
+      creditsPerMonth: 3,
+      featuredBenefit: "Results within 24 hours",
       features: [
-        "Reviews by two or more expert authenticators",
-        "AI-assisted verification technology",
-        "FREE digital certificate of authenticity",
-        "Financial guarantee up to $10,000",
-        "24/7 customer support"
+        { name: "AI-powered primary verification", included: true },
+        { name: "Expert secondary review", included: true },
+        { name: "Digital certificate", included: true },
+        { name: "Email support", included: true },
+        { name: "Priority handling", included: false },
+        { name: "Certificate sharing", included: false },
       ],
-      gradient: "from-amber-500/20 to-amber-700/20",
-      accentColor: "text-amber-500",
-      borderGradient: "from-amber-500/30 via-amber-700/30 to-amber-500/30"
+      popular: false,
+      ctaText: "Select Plan",
+      color: "from-[#C6AC8E]/70 to-[#5E503F]/70"
     },
     {
-      icon: <Watch className="h-10 w-10 text-blue-500" />,
-      title: "Luxury Watches",
-      description: "Authentication for premium and luxury timepieces",
-      startingPrice: "30",
-      options: [
-        { time: "1 Hour", price: "50" },
-        { time: "4 Hours", price: "40" },
-        { time: "24 Hours", price: "30" }
-      ],
+      name: "Premium",
+      description: "Ideal for regular collectors and sellers",
+      monthlyPrice: 19.99,
+      annualPrice: 199.99,
+      savings: 39.89,
+      creditsPerMonth: 8,
+      featuredBenefit: "Results within 6 hours",
       features: [
-        "Reviews by certified horologists",
-        "Movement and serial number verification",
-        "FREE digital certificate of authenticity",
-        "Financial guarantee up to $25,000",
-        "24/7 customer support"
+        { name: "AI-powered primary verification", included: true },
+        { name: "Expert secondary review", included: true },
+        { name: "Digital certificate", included: true },
+        { name: "Priority email & chat support", included: true },
+        { name: "Priority handling", included: true },
+        { name: "Certificate sharing", included: true },
       ],
-      gradient: "from-blue-500/20 to-blue-700/20",
-      accentColor: "text-blue-500",
-      borderGradient: "from-blue-500/30 via-blue-700/30 to-blue-500/30"
+      popular: true,
+      ctaText: "Select Plan",
+      color: "from-[#C6AC8E] to-[#5E503F]"
     },
     {
-      icon: <Footprints className="h-10 w-10 text-green-500" />,
-      title: "Sneakers",
-      description: "Authentication for sneakers and athletic footwear",
-      startingPrice: "3",
-      options: [
-        { time: "10 Minutes", price: "5" },
-        { time: "15 Minutes", price: "4" },
-        { time: "30 Minutes", price: "3" }
-      ],
+      name: "Connoisseur",
+      description: "For serious collectors and resellers",
+      monthlyPrice: 39.99,
+      annualPrice: 399.99,
+      savings: 79.89,
+      creditsPerMonth: 20,
+      featuredBenefit: "Results within 1 hour",
       features: [
-        "Reviews by sneaker authentication experts",
-        "AI-assisted verification technology",
-        "FREE digital certificate of authenticity",
-        "Financial guarantee up to $2,000",
-        "24/7 customer support"
+        { name: "AI-powered primary verification", included: true },
+        { name: "Multiple expert reviews", included: true },
+        { name: "Premium digital certificate", included: true },
+        { name: "24/7 dedicated support", included: true },
+        { name: "VIP priority handling", included: true },
+        { name: "Authentication history archive", included: true },
       ],
-      gradient: "from-green-500/20 to-green-700/20",
-      accentColor: "text-green-500",
-      borderGradient: "from-green-500/30 via-green-700/30 to-green-500/30"
+      popular: false,
+      ctaText: "Select Plan",
+      color: "from-[#C6AC8E]/70 to-[#5E503F]/70"
     }
   ];
-
-  // FAQ items
-  const faqItems = [
+  
+  const businessPlans = [
     {
-      question: "How does the pricing work?",
-      answer: "Our pricing is based on the type of item and your desired turnaround time. The faster you need results, the higher the price. You can choose the option that best fits your needs and budget."
+      name: "Business",
+      description: "For small businesses and shops",
+      monthlyPrice: 99.99,
+      annualPrice: 999.99,
+      savings: 199.89,
+      creditsPerMonth: 50,
+      featuredBenefit: "Bulk authentications",
+      features: [
+        { name: "Business dashboard", included: true },
+        { name: "Team member accounts (3)", included: true },
+        { name: "API access (limited)", included: true },
+        { name: "Bulk upload tool", included: true },
+        { name: "Priority business support", included: true },
+        { name: "White-label certificates", included: false },
+      ],
+      popular: false,
+      ctaText: "Select Plan",
+      color: "from-[#C6AC8E]/70 to-[#5E503F]/70"
     },
     {
-      question: "What payment methods do you accept?",
-      answer: "We accept all major credit cards, PayPal, Apple Pay, and Google Pay. Payment is processed securely through our app at the time of submission."
-    },
-    {
-      question: "Is there a refund if my item is deemed replica?",
-      answer: "No, our fee is for the authentication service regardless of the outcome. However, knowing an item is a replica can save you from a much more expensive purchase."
-    },
-    {
-      question: "Do you offer discounts for bulk authentication?",
-      answer: "Yes, we offer special pricing for bulk authentication. Please contact our sales team for more information on enterprise pricing."
-    },
-    {
-      question: "What is the financial guarantee?",
-      answer: "Our financial guarantee provides compensation if we incorrectly authenticate an item. The coverage amount varies by item category and is subject to our terms and conditions."
+      name: "Enterprise",
+      description: "For marketplaces and large retailers",
+      monthlyPrice: null, // Custom pricing
+      annualPrice: null,
+      savings: null,
+      creditsPerMonth: "Custom",
+      featuredBenefit: "White-label solution",
+      features: [
+        { name: "Full business platform", included: true },
+        { name: "Unlimited team members", included: true },
+        { name: "Complete API integration", included: true },
+        { name: "Custom authentication workflow", included: true },
+        { name: "Dedicated account manager", included: true },
+        { name: "White-label solution", included: true },
+      ],
+      popular: true,
+      ctaText: "Contact Sales",
+      color: "from-[#C6AC8E] to-[#5E503F]"
     }
   ];
-
+  
+  // FAQs related to pricing
+  const faqs = [
+    {
+      question: "What is an authentication credit?",
+      answer: "An authentication credit allows you to submit one item for authentication. Each plan includes a specific number of credits per month, which reset at the beginning of your billing cycle. Additional credits can be purchased separately if needed."
+    },
+    {
+      question: "How does the billing cycle work?",
+      answer: "For monthly plans, you're billed every 30 days from your sign-up date. Annual plans are billed once per year. You can change or cancel your subscription at any time through your account settings."
+    },
+    {
+      question: "Do unused credits roll over?",
+      answer: "No, authentication credits do not roll over to the next month. However, annual subscribers receive a 10% bonus on their monthly credits as an additional benefit."
+    },
+    {
+      question: "Can I upgrade or downgrade my plan?",
+      answer: "Yes, you can change your plan at any time. When upgrading, you'll be charged the prorated difference. When downgrading, the new rate will apply at the start of your next billing cycle."
+    },
+    {
+      question: "Is there a money-back guarantee?",
+      answer: "Yes, we offer a 14-day money-back guarantee for all new subscriptions if you're not completely satisfied with our service."
+    }
+  ];
+  
+  // Get active plans based on current tab
+  const activePlans = activeTab === 'individual' ? individualPlans : businessPlans;
+  
   return (
-    <main className="bg-gradient-to-b from-black to-stone-900 text-white">
+    <main className="bg-gradient-to-b from-white to-[#F8F5F0] text-[#1A1A1A]">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
+      <section className="relative py-28 overflow-hidden">
+        {/* Luxury pattern overlay */}
+        <LuxuryPattern opacity={5} />
+        
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-          <div className="absolute -top-[300px] -left-[300px] w-[600px] h-[600px] rounded-full bg-purple-500/20 blur-[100px]"></div>
-          <div className="absolute -bottom-[200px] -right-[200px] w-[500px] h-[500px] rounded-full bg-blue-500/20 blur-[100px]"></div>
+          <div className="absolute -top-[300px] -left-[300px] w-[600px] h-[600px] rounded-full bg-[#C6AC8E]/10 blur-[100px]"></div>
+          <div className="absolute -bottom-[200px] -right-[200px] w-[500px] h-[500px] rounded-full bg-[#5E503F]/10 blur-[100px]"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">
-              Simple, Transparent Pricing
+            <div className="inline-flex items-center justify-center mb-6">
+              <div className="h-[1px] w-12 bg-[#C6AC8E]/70"></div>
+              <div className="mx-4 w-2 h-2 rounded-full bg-[#C6AC8E]"></div>
+              <div className="h-[1px] w-12 bg-[#C6AC8E]/70"></div>
+            </div>
+            
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              <span className="text-[#1A1A1A]">Investment in </span>
+              <span className="text-[#C6AC8E]">Authenticity</span>
             </h1>
-            <p className="text-xl text-stone-300 max-w-3xl mx-auto">
-              Choose the authentication service that fits your needs and budget.
-              Pay only for what you need, with no hidden fees or subscriptions.
+            
+            <div className="h-[1px] w-40 mx-auto bg-gradient-to-r from-transparent via-[#C6AC8E]/70 to-transparent mb-8"></div>
+            
+            <p className="text-xl text-[#5E503F] max-w-3xl mx-auto leading-relaxed">
+              Choose a plan that aligns with your authentication needs. From casual collectors to enterprise marketplaces, we offer tailored solutions with uncompromising quality.
+            </p>
+          </div>
+          
+          {/* Plan type toggle */}
+          <div className="flex justify-center mb-16">
+            <div className="inline-flex rounded-xl p-1.5 bg-white border border-[#E8E2D9] shadow-sm">
+              <button
+                onClick={() => setActiveTab('individual')}
+                className={`px-6 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
+                  activeTab === 'individual'
+                    ? 'bg-[#C6AC8E]/10 text-[#C6AC8E]'
+                    : 'text-[#5E503F] hover:text-[#5E503F]/80'
+                }`}
+              >
+                Individual Plans
+              </button>
+              <button
+                onClick={() => setActiveTab('business')}
+                className={`px-6 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
+                  activeTab === 'business'
+                    ? 'bg-[#C6AC8E]/10 text-[#C6AC8E]'
+                    : 'text-[#5E503F] hover:text-[#5E503F]/80'
+                }`}
+              >
+                Business Plans
+              </button>
+            </div>
+          </div>
+          
+          {/* Billing toggle */}
+          <div className="flex flex-col items-center mb-8">
+            <div className="relative">
+              <div className="inline-flex items-center p-1 bg-white border border-[#E8E2D9] rounded-full shadow-sm mb-4">
+                <button
+                  onClick={() => setIsAnnual(false)}
+                  className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
+                    !isAnnual 
+                      ? 'bg-[#C6AC8E]/20 text-[#C6AC8E]' 
+                      : 'text-[#5E503F]/70 hover:text-[#5E503F]'
+                  }`}
+                >
+                  Monthly Billing
+                </button>
+                <button
+                  onClick={() => setIsAnnual(true)}
+                  className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
+                    isAnnual 
+                      ? 'bg-[#C6AC8E]/20 text-[#C6AC8E]' 
+                      : 'text-[#5E503F]/70 hover:text-[#5E503F]'
+                  }`}
+                >
+                  Annual Billing
+                </button>
+              </div>
+              
+              {/* Savings badge */}
+              {isAnnual && (
+                <div className="absolute -top-4 -right-4 bg-[#C6AC8E] text-white text-xs font-medium py-1 px-3 rounded-full animate-pulse">
+                  Save up to 20%
+                </div>
+              )}
+            </div>
+            
+            <p className="text-[#5E503F] text-sm">
+              {isAnnual 
+                ? "Save with our annual plans and get an additional 10% bonus credits."
+                : "Switch to annual billing for up to 20% savings and bonus credits."
+              }
             </p>
           </div>
         </div>
       </section>
-      
-      {/* Pricing Cards Section */}
-      <section className="py-10 relative">
+            {/* Pricing Cards Section */}
+            <section id="pricing-cards" className="py-16 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {pricingCategories.map((category, index) => (
-              <div key={index} className="relative group">
-                {/* Animated border gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${category.borderGradient} rounded-2xl z-0 animate-pulse-slow`}></div>
+            {activePlans.map((plan, index) => (
+              <div 
+                key={index} 
+                className={`relative rounded-xl overflow-hidden transition-all duration-500 ${
+                  plan.popular 
+                    ? 'md:scale-105 md:-translate-y-4 z-10 shadow-xl' 
+                    : 'shadow-lg hover:shadow-xl hover:-translate-y-2'
+                } ${isAnimating ? 'opacity-100' : 'opacity-0 translate-y-10'}`}
+                style={{ transitionDelay: `${index * 150}ms` }}
+              >
+                {/* Top accent bar */}
+                <div className={`h-2 w-full bg-gradient-to-r ${plan.color}`}></div>
                 
-                {/* Card content with glassmorphism */}
-                <div className={`relative m-[1px] bg-gradient-to-br ${category.gradient} backdrop-blur-xl rounded-2xl overflow-hidden z-10 h-full`}>
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-white/40 to-white/0"></div>
-                  <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-white/40 to-white/0"></div>
-                  
-                  <div className="px-8 py-10">
-                    <div className="flex items-center gap-4 mb-6">
-                      {category.icon}
-                      <h3 className="text-2xl font-bold text-white">{category.title}</h3>
-                    </div>
-                    <p className="text-stone-300 mb-8">{category.description}</p>
-                    
-                    <div className="mb-8">
-                      <p className="text-sm text-stone-400 mb-1">Starting from</p>
-                      <p className={`text-4xl font-bold ${category.accentColor}`}>${category.startingPrice} <span className="text-lg text-stone-400">USD</span></p>
-                    </div>
-                    
-                    <div className="border-t border-b border-white/10 py-8 mb-8">
-                      <p className="text-sm font-medium text-stone-300 mb-6">Turnaround Time Options</p>
-                      {category.options.map((option, idx) => (
-                        <div key={idx} className="flex justify-between mb-4">
-                          <span className="text-stone-300">{option.time}</span>
-                          <span className={`font-bold ${category.accentColor}`}>${option.price} USD</span>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <div className="mb-8">
-                      <p className="text-sm font-medium text-stone-300 mb-6">All Services Include</p>
-                      <ul className="space-y-4">
-                        {category.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-start">
-                            <div className={`p-1 rounded-full bg-gradient-to-br ${category.gradient} mr-3 flex-shrink-0`}>
-                              <Check className="h-4 w-4 text-white" />
-                            </div>
-                            <span className="text-stone-300">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <Button className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20">
-                      Download App
-                    </Button>
+                {/* Popular badge */}
+                {plan.popular && (
+                  <div className="absolute top-0 right-6 bg-[#C6AC8E] text-white text-xs font-medium py-1.5 px-3 rounded-b-md shadow-md">
+                    MOST POPULAR
                   </div>
+                )}
+                
+                <div className="bg-white p-8 h-full flex flex-col border border-t-0 border-[#E8E2D9]">
+                  {/* Plan name and description */}
+                  <div className="mb-6">
+                    <h3 className="text-2xl font-bold text-[#1A1A1A]">{plan.name}</h3>
+                    <p className="text-[#5E503F] mt-1">{plan.description}</p>
+                  </div>
+                  
+                  {/* Price */}
+                  <div className="mb-6">
+                    {plan.monthlyPrice !== null ? (
+                      <>
+                        <div className="flex items-end">
+                          <span className="text-4xl font-bold text-[#1A1A1A]">
+                            ${isAnnual ? plan.annualPrice : plan.monthlyPrice}
+                          </span>
+                          <span className="text-[#5E503F]/80 ml-2 mb-1">
+                            {isAnnual ? '/year' : '/month'}
+                          </span>
+                        </div>
+                        
+                        {/* Credits info */}
+                        <div className="mt-2 flex items-center">
+                          <div className="w-5 h-5 rounded-full bg-[#F8F5F0] flex items-center justify-center mr-2">
+                            <span className="text-[#C6AC8E] text-xs font-bold">✓</span>
+                          </div>
+                          <span className="text-[#5E503F]">
+                            {plan.creditsPerMonth} {typeof plan.creditsPerMonth === 'number' ? 'credits' : ''} per month
+                          </span>
+                        </div>
+                        
+                        {/* Savings callout for annual */}
+                        {isAnnual && plan.savings && (
+                          <div className="mt-2 text-sm text-[#C6AC8E] font-medium bg-[#F8F5F0] px-3 py-1 rounded-md inline-block">
+                            Save ${plan.savings} per year
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className="text-3xl font-bold text-[#1A1A1A]">Custom Pricing</div>
+                    )}
+                  </div>
+                  
+                  {/* Featured benefit */}
+                  <div className="bg-[#F8F5F0] px-4 py-3 rounded-xl mb-6 border border-[#E8E2D9]">
+                    <div className="flex items-center">
+                      <Shield className="h-5 w-5 text-[#C6AC8E] mr-2 flex-shrink-0" />
+                      <span className="text-[#5E503F] font-medium">{plan.featuredBenefit}</span>
+                    </div>
+                  </div>
+                  
+                  {/* Features */}
+                  <div className="space-y-4 mb-8 flex-grow">
+                    {plan.features.map((feature, i) => (
+                      <div key={i} className="flex items-start">
+                        {feature.included ? (
+                          <CheckCircle2 className="h-5 w-5 text-[#C6AC8E] mr-3 mt-0.5 flex-shrink-0" />
+                        ) : (
+                          <XCircle className="h-5 w-5 text-[#5E503F]/30 mr-3 mt-0.5 flex-shrink-0" />
+                        )}
+                        <span className={`${feature.included ? 'text-[#5E503F]' : 'text-[#5E503F]/60'}`}>
+                          {feature.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* CTA Button */}
+                  <Link 
+                    href={plan.ctaText === "Contact Sales" ? "/contact" : "/signup"}
+                    className={`w-full py-4 text-center rounded-lg transition-all duration-300 relative overflow-hidden group ${
+                      plan.popular
+                        ? 'bg-gradient-to-r from-[#C6AC8E] to-[#5E503F] text-white hover:shadow-lg'
+                        : 'bg-white border border-[#C6AC8E] text-[#5E503F] hover:bg-[#C6AC8E]/5'
+                    }`}
+                  >
+                    <span className="relative z-10">{plan.ctaText}</span>
+                    <div className="absolute -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-10 group-hover:animate-shine"></div>
+                  </Link>
                 </div>
               </div>
             ))}
           </div>
+          
+          {/* Enterprise callout for individual plans */}
+          {activeTab === 'individual' && (
+            <div className="mt-16 bg-white rounded-xl border border-[#E8E2D9] shadow-md p-8 flex flex-col md:flex-row items-center justify-between">
+              <div className="mb-6 md:mb-0 md:mr-8">
+                <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2">Need a custom solution?</h3>
+                <p className="text-[#5E503F]">For businesses, marketplaces, or high-volume needs, our Enterprise solution offers customized authentication services.</p>
+              </div>
+              <Link href="/contact">
+                <Button className="whitespace-nowrap bg-white border-2 border-[#C6AC8E] text-[#5E503F] hover:bg-[#C6AC8E]/5 px-6 py-3 rounded-lg">
+                  Contact Sales
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       </section>
       
-      {/* Enterprise Pricing Section */}
-      <section className="py-20 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 p-10 md:p-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-              <div>
-                <h2 className="text-3xl font-bold mb-6">Enterprise Pricing</h2>
-                <p className="text-lg text-stone-300 mb-8">
-                  For businesses that need to authenticate items at scale, we offer custom pricing plans tailored to your specific needs.
-                </p>
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start">
-                    <div className="p-1 rounded-full bg-gradient-to-br from-purple-500/20 to-purple-700/20 mr-3 flex-shrink-0">
-                      <Check className="h-4 w-4 text-white" />
-                    </div>
-                    <span className="text-stone-300">Volume discounts based on authentication quantity</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="p-1 rounded-full bg-gradient-to-br from-purple-500/20 to-purple-700/20 mr-3 flex-shrink-0">
-                      <Check className="h-4 w-4 text-white" />
-                    </div>
-                    <span className="text-stone-300">API integration for seamless workflow</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="p-1 rounded-full bg-gradient-to-br from-purple-500/20 to-purple-700/20 mr-3 flex-shrink-0">
-                      <Check className="h-4 w-4 text-white" />
-                    </div>
-                    <span className="text-stone-300">White-label authentication solutions</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="p-1 rounded-full bg-gradient-to-br from-purple-500/20 to-purple-700/20 mr-3 flex-shrink-0">
-                      <Check className="h-4 w-4 text-white" />
-                    </div>
-                    <span className="text-stone-300">Dedicated account manager and priority support</span>
-                  </li>
-                </ul>
-                <Link href="/contact">
-                  <Button size="lg" className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white">
-                    Contact Sales
-                  </Button>
-                </Link>
+      {/* Features Comparison Section */}
+      <section className="py-16 bg-[#F8F5F0] relative">
+        <LuxuryPattern opacity={3} />
+        
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold mb-4 text-[#1A1A1A]">Detailed Plan Comparison</h2>
+            <p className="text-[#5E503F] max-w-3xl mx-auto">
+              Compare features across our plans to find the perfect match for your authentication needs.
+            </p>
+          </div>
+          
+          {/* Comparison table with expandable sections */}
+          <div className="bg-white rounded-xl shadow-lg border border-[#E8E2D9] overflow-hidden">
+            {/* Table header */}
+            <div className="grid grid-cols-5 border-b border-[#E8E2D9]">
+              <div className="col-span-2 p-5 bg-[#F8F5F0]">
+                <h3 className="font-medium text-[#1A1A1A]">Features</h3>
+              </div>
+              {individualPlans.map((plan, index) => (
+                <div key={index} className={`p-5 text-center ${plan.popular ? 'bg-[#C6AC8E]/10' : ''}`}>
+                  <h3 className="font-medium text-[#1A1A1A]">{plan.name}</h3>
+                </div>
+              ))}
+            </div>
+            
+            {/* Basic features section */}
+            <div className="divide-y divide-[#E8E2D9]">
+              <div className="grid grid-cols-5 hover:bg-[#F8F5F0]/50 transition-colors">
+                <div className="col-span-2 p-5">
+                  <span className="text-[#5E503F]">Authentication Credits</span>
+                </div>
+                {individualPlans.map((plan, index) => (
+                  <div key={index} className={`p-5 text-center ${plan.popular ? 'bg-[#C6AC8E]/5' : ''}`}>
+                    <span className="text-[#5E503F]">{plan.creditsPerMonth}/mo</span>
+                  </div>
+                ))}
               </div>
               
-              <div className="relative h-[300px] md:h-[400px] rounded-xl overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-purple-700/20 backdrop-blur-md rounded-xl border border-white/20 flex items-center justify-center">
-                  <div className="text-center">
-                    <h3 className="text-2xl font-bold mb-4">Custom Solutions</h3>
-                    <p className="text-stone-300 max-w-xs mx-auto">
-                      Tailored pricing and features for marketplaces, retailers, and authentication services
-                    </p>
+              <div className="grid grid-cols-5 hover:bg-[#F8F5F0]/50 transition-colors">
+                <div className="col-span-2 p-5">
+                  <span className="text-[#5E503F]">Authentication Speed</span>
+                </div>
+                <div className="p-5 text-center">
+                  <span className="text-[#5E503F]">Within 24h</span>
+                </div>
+                <div className="p-5 text-center bg-[#C6AC8E]/5">
+                  <span className="text-[#5E503F]">Within 6h</span>
+                </div>
+                <div className="p-5 text-center">
+                  <span className="text-[#5E503F]">Within 1h</span>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-5 hover:bg-[#F8F5F0]/50 transition-colors">
+                <div className="col-span-2 p-5">
+                  <span className="text-[#5E503F]">AI Verification</span>
+                </div>
+                {individualPlans.map((plan, index) => (
+                  <div key={index} className={`p-5 text-center ${plan.popular ? 'bg-[#C6AC8E]/5' : ''}`}>
+                    <CheckCircle2 className="h-5 w-5 text-[#C6AC8E] mx-auto" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Expandable advanced features */}
+            <div className={`transition-all duration-500 overflow-hidden ${isComparisonExpanded ? 'max-h-[1000px]' : 'max-h-0'}`}>
+              <div className="divide-y divide-[#E8E2D9]">
+                <div className="grid grid-cols-5 hover:bg-[#F8F5F0]/50 transition-colors">
+                  <div className="col-span-2 p-5">
+                    <span className="text-[#5E503F]">Expert Review Level</span>
+                  </div>
+                  <div className="p-5 text-center">
+                    <span className="text-[#5E503F]">Single Expert</span>
+                  </div>
+                  <div className="p-5 text-center bg-[#C6AC8E]/5">
+                    <span className="text-[#5E503F]">Single Expert</span>
+                  </div>
+                  <div className="p-5 text-center">
+                    <span className="text-[#5E503F]">Multiple Experts</span>
                   </div>
                 </div>
+                
+                <div className="grid grid-cols-5 hover:bg-[#F8F5F0]/50 transition-colors">
+                  <div className="col-span-2 p-5">
+                    <span className="text-[#5E503F]">Certificate Quality</span>
+                  </div>
+                  <div className="p-5 text-center">
+                    <span className="text-[#5E503F]">Standard</span>
+                  </div>
+                  <div className="p-5 text-center bg-[#C6AC8E]/5">
+                    <span className="text-[#5E503F]">Enhanced</span>
+                  </div>
+                  <div className="p-5 text-center">
+                    <span className="text-[#5E503F]">Premium</span>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-5 hover:bg-[#F8F5F0]/50 transition-colors">
+                  <div className="col-span-2 p-5">
+                    <span className="text-[#5E503F]">Certificate Sharing</span>
+                  </div>
+                  <div className="p-5 text-center">
+                    <XCircle className="h-5 w-5 text-[#5E503F]/30 mx-auto" />
+                  </div>
+                  <div className="p-5 text-center bg-[#C6AC8E]/5">
+                    <CheckCircle2 className="h-5 w-5 text-[#C6AC8E] mx-auto" />
+                  </div>
+                  <div className="p-5 text-center">
+                    <CheckCircle2 className="h-5 w-5 text-[#C6AC8E] mx-auto" />
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-5 hover:bg-[#F8F5F0]/50 transition-colors">
+                  <div className="col-span-2 p-5">
+                    <span className="text-[#5E503F]">Authentication History</span>
+                  </div>
+                  <div className="p-5 text-center">
+                    <span className="text-[#5E503F]">30 days</span>
+                  </div>
+                  <div className="p-5 text-center bg-[#C6AC8E]/5">
+                    <span className="text-[#5E503F]">1 year</span>
+                  </div>
+                  <div className="p-5 text-center">
+                    <span className="text-[#5E503F]">Unlimited</span>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-5 hover:bg-[#F8F5F0]/50 transition-colors">
+                  <div className="col-span-2 p-5">
+                    <span className="text-[#5E503F]">Support Type</span>
+                  </div>
+                  <div className="p-5 text-center">
+                    <span className="text-[#5E503F]">Email</span>
+                  </div>
+                  <div className="p-5 text-center bg-[#C6AC8E]/5">
+                    <span className="text-[#5E503F]">Email & Chat</span>
+                  </div>
+                  <div className="p-5 text-center">
+                    <span className="text-[#5E503F]">24/7 Dedicated</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Expand/Collapse button */}
+            <div 
+              className="p-4 border-t border-[#E8E2D9] bg-[#F8F5F0] flex justify-center cursor-pointer hover:bg-[#E8E2D9]/30 transition-colors"
+              onClick={() => setIsComparisonExpanded(!isComparisonExpanded)}
+            >
+              <div className="flex items-center text-[#5E503F] font-medium">
+                {isComparisonExpanded ? 'Show Less' : 'Show All Features'}
+                <ChevronDown className={`ml-2 h-5 w-5 transition-transform duration-300 ${isComparisonExpanded ? 'rotate-180' : ''}`} />
               </div>
             </div>
           </div>
@@ -236,64 +555,125 @@ export default function PricingPage() {
       </section>
       
       {/* FAQ Section */}
-      <section className="py-20 relative bg-stone-900">
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-          <div className="absolute top-[100px] right-[100px] w-[500px] h-[500px] rounded-full bg-amber-500/10 blur-[150px]"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <section className="py-24 bg-white relative">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Frequently Asked Questions</h2>
-            <p className="text-lg text-stone-300 max-w-2xl mx-auto">
-              Have questions about our pricing? Find answers to common questions below.
-            </p>
+            <div className="flex justify-center mb-6">
+              <div className="h-[2px] w-16 bg-gradient-to-r from-transparent via-[#C6AC8E] to-transparent"></div>
+            </div>
+            
+            <h2 className="text-3xl font-bold mb-6 text-[#1A1A1A]">Frequently Asked Questions</h2>
+            
+            <p className="text-[#5E503F]">Find answers to common questions about our pricing plans and authentication credits.</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {faqItems.map((item, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6">
-                <h3 className="text-xl font-bold mb-4">{item.question}</h3>
-                <p className="text-stone-300">{item.answer}</p>
+          <div className="space-y-6">
+            {faqs.map((faq, index) => (
+              <div 
+                key={index}
+                className="bg-white rounded-xl border border-[#E8E2D9] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+              >
+                <div 
+                  className="p-6 flex justify-between items-center cursor-pointer"
+                  onClick={() => setActiveQuestion(activeQuestion === index ? null : index)}
+                >
+                  <h3 className="text-lg font-medium text-[#1A1A1A] pr-4">{faq.question}</h3>
+                  <div className={`w-8 h-8 rounded-full bg-[#F8F5F0] flex items-center justify-center flex-shrink-0 transition-transform duration-300 ${activeQuestion === index ? 'rotate-180' : ''}`}>
+                    <ChevronDown className="h-5 w-5 text-[#C6AC8E]" />
+                  </div>
+                </div>
+                
+                <div className={`transition-all duration-300 overflow-hidden ${activeQuestion === index ? 'max-h-40' : 'max-h-0'}`}>
+                  <div className="p-6 pt-0 border-t border-[#E8E2D9]">
+                    <p className="text-[#5E503F]">{faq.answer}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
-          
-          <div className="text-center mt-12">
-            <p className="text-stone-300 mb-6">
-              Don't see your question here? Contact our support team for more information.
-            </p>
-            <Link href="/contact">
-              <Button variant="outline" className="border-white/20 bg-white/10 backdrop-blur-md text-white hover:bg-white/20">
-                Contact Support
-              </Button>
-            </Link>
-          </div>
         </div>
       </section>
-
-            {/* CTA Section */}
-    <section className="py-20 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="bg-gradient-to-r from-amber-500/20 to-amber-700/20 backdrop-blur-md rounded-3xl border border-amber-500/30 p-10 md:p-16">
-            <div className="text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>
-              <p className="text-lg text-stone-300 max-w-2xl mx-auto mb-8">
-                Download the LEGIT APP today and get your items authenticated by our experts.
-              </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Button size="lg" className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white">
-                  Download App
-                </Button>
-                <Link href="/contact">
-                  <Button size="lg" variant="outline" className="border-white/20 bg-white/10 backdrop-blur-md text-white hover:bg-white/20">
-                    Contact Sales
+      
+      {/* CTA Section */}
+      <section className="py-24 bg-[#F8F5F0] relative">
+        <LuxuryPattern opacity={4} />
+        
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="bg-white rounded-2xl shadow-xl border border-[#E8E2D9] overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-2">
+              {/* Left side - Image */}
+              <div className="relative h-64 lg:h-auto order-2 lg:order-1">
+                <Image
+                  src="/cta/cta-app-image.png" // Replace with your image
+                  alt="Authentico Premium Authentication"
+                  fill
+                  className="object-cover"
+                />
+                
+                {/* Decorative elements */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="absolute w-48 h-48 border border-white/30 rounded-full animate-pulse"></div>
+                  <div className="absolute w-64 h-64 border border-white/20 rounded-full"></div>
+                </div>
+              </div>
+              
+              {/* Right side - Content */}
+              <div className="p-10 lg:p-16 order-1 lg:order-2 flex flex-col justify-center">
+                <div className="mb-6">
+                  <div className="h-1 w-20 bg-[#C6AC8E]"></div>
+                </div>
+                
+                <h2 className="text-3xl font-bold mb-6 text-[#1A1A1A]">Ready to Authenticate with Confidence?</h2>
+                
+                <p className="text-[#5E503F] mb-8 leading-relaxed">
+                  Start your authentication journey today with our premium service. Experience the peace of mind that comes with verified authenticity.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button className="bg-gradient-to-r from-[#C6AC8E] to-[#5E503F] hover:from-[#D9C4AA] hover:to-[#6E6049] text-white border-0 shadow-lg px-8 py-6 rounded-lg relative overflow-hidden group">
+                    <span className="relative z-10">Download App</span>
+                    <div className="absolute -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-10 group-hover:animate-shine"></div>
                   </Button>
-                </Link>
+                  
+                  <Button variant="outline" className="border-2 border-[#C6AC8E] text-[#5E503F] hover:bg-[#C6AC8E]/5 px-8 py-6 rounded-lg">
+                    Try Demo
+                  </Button>
+                </div>
+                              {/* Trust badge */}
+                              <div className="mt-10 flex items-center">
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="w-5 h-5 text-[#C6AC8E]" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                      </svg>
+                    ))}
+                  </div>
+                  <span className="ml-2 text-[#5E503F]">4.9 out of 5 stars from 2,000+ reviews</span>
+                </div>
+                
+                {/* Money-back guarantee */}
+                <div className="mt-4 flex items-center text-[#5E503F]">
+                  <Shield className="h-5 w-5 text-[#C6AC8E] mr-2" />
+                  <span>14-day money-back guarantee</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+      
+      {/* Add shine animation to global styles */}
+      <style jsx global>{`
+        @keyframes shine {
+          100% {
+            left: 125%;
+          }
+        }
+        
+        .animate-shine {
+          animation: shine 1.5s ease-in-out;
+        }
+      `}</style>
     </main>
   );
 }

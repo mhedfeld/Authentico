@@ -12,6 +12,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Menu, X, ChevronDown, Search } from 'lucide-react';
 
+
+
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -36,9 +38,12 @@ export function Navbar() {
         ? 'bg-white shadow-lg' 
         : 'bg-white/80 backdrop-blur-md'
     }`}>
+
       {/* Gold accent bar at top */}
       <div className="h-1 bg-gradient-to-r from-[#C6AC8E] via-[#DFCDB3] to-[#C6AC8E]"></div>
       
+      <div className="relative">
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           <div className="flex items-center">
@@ -61,7 +66,6 @@ export function Navbar() {
               </div>
             </Link>
           </div>
-          
           {/* Desktop navigation */}
           <div className="hidden md:flex items-center space-x-1">
             <Link href="/products" className="relative text-[#5E503F] hover:text-[#C6AC8E] px-4 py-2 rounded-md text-sm font-medium transition-colors group">
@@ -130,11 +134,12 @@ export function Navbar() {
           </div>
         </div>
       </div>
+      </div>
       
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg border-t border-[#E8E2D9] overflow-hidden">
-          <div className="px-4 pt-3 pb-5 space-y-2">
+        <div className="md:hidden bg-white shadow-lg border-t border-[#E8E2D9] overflow-hidden relative">
+          <div className="px-4 pt-3 pb-5 space-y-2 relative z-10">
             <Link 
               href="/products" 
               className="block text-[#5E503F] hover:text-[#C6AC8E] px-3 py-2.5 rounded-md text-base font-medium border border-transparent hover:border-[#E8E2D9] hover:bg-[#F8F5F0] transition-all"

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { LuxuryPattern } from '@/components/ui/luxury-pattern';
 
 export function HeroSection() {
   // Array of image paths
@@ -34,6 +35,9 @@ export function HeroSection() {
 
   return (
     <div className="relative bg-gradient-to-r from-[#F8F5F0] to-white py-20 md:py-28 overflow-hidden">
+      {/* Add the luxury pattern */}
+      <LuxuryPattern opacity={5} />
+      
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
         <div className="absolute -top-[300px] -left-[300px] w-[600px] h-[600px] rounded-full bg-[#C6AC8E]/10 blur-[100px]"></div>
@@ -64,8 +68,9 @@ export function HeroSection() {
             
             {/* Elegant buttons */}
             <div className="flex flex-col sm:flex-row gap-5">
-              <Button size="lg" className="bg-gradient-to-r from-[#C6AC8E] to-[#5E503F] hover:from-[#5E503F] hover:to-[#C6AC8E] text-white border-0 h-14 px-8 text-lg rounded-xl shadow-lg">
-                Download App
+              <Button size="lg" className="bg-gradient-to-r from-[#C6AC8E] to-[#5E503F] hover:from-[#5E503F] hover:to-[#C6AC8E] text-white border-0 h-14 px-8 text-lg rounded-xl shadow-lg group overflow-hidden">
+                <span className="relative z-10">Download App</span>
+                <div className="absolute -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-10 group-hover:animate-shine"></div>
               </Button>
               <Button size="lg" variant="outline" className="border-2 border-[#C6AC8E] bg-white text-[#5E503F] hover:bg-[#C6AC8E]/10 h-14 px-8 text-lg rounded-xl">
                 Learn More
@@ -137,6 +142,19 @@ export function HeroSection() {
           </div>
         </div>
       </div>
+      
+      {/* Add shine animation if not already in your global styles */}
+      <style jsx global>{`
+        @keyframes shine {
+          100% {
+            left: 125%;
+          }
+        }
+        
+        .animate-shine {
+          animation: shine 1.5s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }
