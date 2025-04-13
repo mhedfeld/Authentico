@@ -4,7 +4,8 @@ import { Inter } from 'next/font/google';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { AppProvider } from '@/context/app-context';
-import Head from 'next/head';
+import { AuthProvider } from '@/lib/auth'; // Import AuthProvider
+import { Toaster } from 'sonner'; // Import Toaster for auth notifications
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,9 +26,12 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} bg-white text-[#1A1A1A] min-h-screen flex flex-col`}>
         <AppProvider>
-          <Navbar />
-          <main className="flex-grow">{children}</main>
-          <Footer />
+          <AuthProvider> {/* Add AuthProvider here */}
+            <Toaster position="top-right" /> {/* Add Toaster for notifications */}
+            <Navbar />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </AuthProvider>
         </AppProvider>
       </body>
     </html>
