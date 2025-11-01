@@ -1,7 +1,3 @@
-Got it! I’ve replaced the non-working icons with fitting emojis on the headings, keeping the original README text completely intact. Here’s the updated version:
-
----
-
 # ArcAI - Chat-to-Design-Case-Study
 
 **Live Demo**: [Deployed on Vercel](#deployment)  
