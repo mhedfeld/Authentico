@@ -411,12 +411,14 @@ The system is locked to **OpenAI** branding with comprehensive brand identity:
 
 ### 🖼️ Brand Design Inspirations
 
-<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 960px; margin: 0 auto;">
-  <img src="https://d2ocroys3p1hkd.cloudfront.net/3prgxfbejkfedhkbjxznfdf53j9cibodco7xapwl7jow.jpg" alt="Inspiration 1" style="width: 100%; max-width: 100%; height: auto; display: block;" />
-  <img src="https://images.ctfassets.net/kftzwdyauwt9/1L8YG0N2Cuz0ZBhqaI3tVo/1b2a7535290c5fafb6b4b38e6b65e3e9/P2_1__1_.png?w=3840&q=90&fm=webp" alt="Inspiration 2" style="width: 100%; max-width: 100%; height: auto; display: block;" />
-  <img src="https://cdn.gradual.com/images/https://d2xo500swnpgl1.cloudfront.net/uploads/oaiacademy/Work-Users-Cover-Images-41--b5653cb4-4f51-4b93-b78d-2ec4fde18050-1754575154441.jpeg?fit=scale-down&width=1200" alt="Inspiration 3" style="width: 100%; max-width: 100%; height: auto; display: block;" />
-  <img src="https://images.ctfassets.net/kftzwdyauwt9/2xEy2QH4BIYhpJXE8Iypg0/6079519e12ed3949d5db25e591c18479/Schibsted_hero_card.png?w=3840&q=90&fm=webp" alt="Inspiration 4" style="width: 100%; max-width: 100%; height: auto; display: block;" />
-</div>
+<p align="center">
+  <img src="https://d2ocroys3p1hkd.cloudfront.net/3prgxfbejkfedhkbjxznfdf53j9cibodco7xapwl7jow.jpg" alt="Inspiration 1" width="49%">
+  <img src="https://images.ctfassets.net/kftzwdyauwt9/1L8YG0N2Cuz0ZBhqaI3tVo/1b2a7535290c5fafb6b4b38e6b65e3e9/P2_1__1_.png?w=3840&q=90&fm=webp" alt="Inspiration 2" width="49%">
+</p>
+<p align="center">
+  <img src="https://cdn.gradual.com/images/https://d2xo500swnpgl1.cloudfront.net/uploads/oaiacademy/Work-Users-Cover-Images-41--b5653cb4-4f51-4b93-b78d-2ec4fde18050-1754575154441.jpeg?fit=scale-down&width=1200" alt="Inspiration 3" width="49%">
+  <img src="https://images.ctfassets.net/kftzwdyauwt9/2xEy2QH4BIYhpJXE8Iypg0/6079519e12ed3949d5db25e591c18479/Schibsted_hero_card.png?w=3840&q=90&fm=webp" alt="Inspiration 4" width="49%">
+</p>
 
 ### ➕ Adding More Brand Information
 
