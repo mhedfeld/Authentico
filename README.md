@@ -1,7 +1,7 @@
 # ArcAI - Chat-to-Design-Case-Study
 <a id="deployment"></a>
 
-**Live Demo**: [Deployed on Vercel](#deployment)  
+**Live Demo**: [Deployed on Vercel](#https://case-study-arcai-k09cht8qe-maurice-hedfelds-projects.vercel.app))  
 **Tech Stack**: Next.js 15, React 19, Konva.js, OpenAI API
 
 ---
