@@ -1,4 +1,4 @@
-Here's your updated README with a structured Table of Contents and lightweight inline SVG icons (not emojis) added to key headings. I preserved all original text verbatim and only added anchors, the TOC, and icons.
+Got it! I’ve replaced the non-working icons with fitting emojis on the headings, keeping the original README text completely intact. Here’s the updated version:
 
 ---
 
@@ -9,50 +9,49 @@ Here's your updated README with a structured Table of Contents and lightweight i
 
 ---
 
-## Table of Contents
+## 📚 Table of Contents
 
-- [Overview](#overview)
-- [Case Study Context](#case-study-context)
-  - [Problem Statement](#problem-statement)
-  - [Scope Definition](#scope-definition)
+- [ℹ️ Overview](#-overview)
+- [💼 Case Study Context](#-case-study-context)
+  - [❓ Problem Statement](#-problem-statement)
+  - [📦 Scope Definition](#-scope-definition)
     - [In Scope](#in-scope)
     - [Out of Scope](#out-of-scope)
-  - [User Journey](#user-journey)
-  - [User Stories & Acceptance Criteria](#user-stories--acceptance-criteria)
-    - [1. Deterministic Layout Generation](#1-deterministic-layout-generation)
-    - [2. Visible Layout Plan](#2-visible-layout-plan)
-    - [3. Constrained Editing](#3-constrained-editing)
-    - [4. Chat-Driven Refinement](#4-chat-driven-refinement)
-    - [5. On-Brand Variant Generation](#5-on-brand-variant-generation)
-    - [6. Vector-Accurate Export](#6-vector-accurate-export)
-- [Design Decisions & Rationale](#design-decisions--rationale)
-  - [1. Deterministic Chat-to-Plan Parsing](#1-deterministic-chat-to-plan-parsing)
-  - [2. Strict On-Brand Enforcement (OpenAI)](#2-strict-on-brand-enforcement-openai)
-  - [3. Constrained Editing with Konva.js](#3-constrained-editing-with-konvajs)
-  - [4. Vector Export Fidelity (JPG + PDF)](#4-vector-export-fidelity-jpg--pdf)
-  - [5. Edge Proxy for LLM on Vercel](#5-edge-proxy-for-llm-on-vercel)
-- [Technical Implementation](#technical-implementation)
-  - [Architecture](#architecture)
-  - [Key Components](#key-components)
-  - [Determinism Guarantees](#determinism-guarantees)
-- [Features](#features)
-- [Usage Guide](#usage-guide)
-  - [Creating a Design](#creating-a-design)
-  - [Refining Designs](#refining-designs)
-  - [Canvas Editing](#canvas-editing)
-  - [Exporting](#exporting)
-- [Brand Guidelines](#brand-guidelines)
-  - [Adding More Brand Information](#adding-more-brand-information)
-- [Project Structure](#project-structure)
-- [Development Timeline](#development-timeline)
-  - [Development Phases](#development-phases)
-  - [Key Challenges Overcome](#key-challenges-overcome)
-- [Future Enhancements (Out of Scope)](#future-enhancements-out-of-scope)
+  - [🗺️ User Journey](#-user-journey)
+  - [🧩 User Stories & Acceptance Criteria](#-user-stories--acceptance-criteria)
+    - [🎯 1. Deterministic Layout Generation](#-1-deterministic-layout-generation)
+    - [🧾 2. Visible Layout Plan](#-2-visible-layout-plan)
+    - [✏️ 3. Constrained Editing](#-3-constrained-editing)
+    - [💬 4. Chat-Driven Refinement](#-4-chat-driven-refinement)
+    - [🎲 5. On-Brand Variant Generation](#-5-on-brand-variant-generation)
+    - [📤 6. Vector-Accurate Export](#-6-vector-accurate-export)
+- [💡 Design Decisions & Rationale](#-design-decisions--rationale)
+  - [🧠 1. Deterministic Chat-to-Plan Parsing](#-1-deterministic-chat-to-plan-parsing)
+  - [🔒 2. Strict On-Brand Enforcement (OpenAI)](#-2-strict-on-brand-enforcement-openai)
+  - [🖼️ 3. Constrained Editing with Konva.js](#-3-constrained-editing-with-konvajs)
+  - [📄 4. Vector Export Fidelity (JPG + PDF)](#-4-vector-export-fidelity-jpg--pdf)
+  - [⚡ 5. Edge Proxy for LLM on Vercel](#-5-edge-proxy-for-llm-on-vercel)
+- [🛠️ Technical Implementation](#-technical-implementation)
+  - [🏗️ Architecture](#-architecture)
+  - [🧱 Key Components](#-key-components)
+  - [🔁 Determinism Guarantees](#-determinism-guarantees)
+- [⭐ Features](#-features)
+- [📖 Usage Guide](#-usage-guide)
+  - [🖌️ Creating a Design](#-creating-a-design)
+  - [🔧 Refining Designs](#-refining-designs)
+  - [🖼️ Canvas Editing](#-canvas-editing)
+  - [⬇️ Exporting](#-exporting)
+- [🎨 Brand Guidelines](#-brand-guidelines)
+  - [➕ Adding More Brand Information](#-adding-more-brand-information)
+- [🗂️ Project Structure](#-project-structure)
+- [🗓️ Development Timeline](#-development-timeline)
+  - [⚙️ Development Phases](#-development-phases)
+  - [🚧 Key Challenges Overcome](#-key-challenges-overcome)
+- [🔭 Future Enhancements (Out of Scope)](#-future-enhancements-out-of-scope)
 
 ---
 
-<a id="overview"></a>
-## <img alt="info icon" style="width:18px;height:18px;vertical-align:-3px;margin-right:8px;" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10' fill='none' stroke='%230a0a0b' stroke-width='2'/><line x1='12' y1='10' x2='12' y2='16' stroke='%230a0a0b' stroke-width='2'/><circle cx='12' cy='7' r='1.5' fill='%230a0a0b'/></svg>"> Overview
+## ℹ️ Overview
 
 ArcAI is a case study project that demonstrates how to build a deterministic, chat-driven design system for B2B marketing content. The application takes short natural language prompts and converts them into professional, on-brand LinkedIn post visuals with visible layout plans, light constrained editing, variant generation, and vector-accurate exports.
 
@@ -60,11 +59,9 @@ ArcAI is a case study project that demonstrates how to build a deterministic, ch
 
 ---
 
-<a id="case-study-context"></a>
-## <img alt="briefcase icon" style="width:18px;height:18px;vertical-align:-3px;margin-right:8px;" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='4' y='8' width='16' height='10' rx='2' fill='none' stroke='%230a0a0b' stroke-width='2'/><rect x='9' y='5' width='6' height='3' rx='1' fill='none' stroke='%230a0a0b' stroke-width='2'/></svg>"> Case Study Context
+## 💼 Case Study Context
 
-<a id="problem-statement"></a>
-### Problem Statement
+### ❓ Problem Statement
 
 The case study challenge was to build a simple web app that:
 
@@ -81,10 +78,8 @@ The case study challenge was to build a simple web app that:
 - Repository with source code
 - Screen recording demo
 
-<a id="scope-definition"></a>
-### Scope Definition
+### 📦 Scope Definition
 
-<a id="in-scope"></a>
 #### In Scope ✅
 
 - Single predefined brand (OpenAI) applied to all outputs
@@ -95,7 +90,6 @@ The case study challenge was to build a simple web app that:
 - Exports: JPG and vector PDF (preserve vector text/shapes where feasible)
 - Hosting: Live URL + repository + short screen recording
 
-<a id="out-of-scope"></a>
 #### Out of Scope ❌
 
 - Generative image models (explicitly excluded)
@@ -103,8 +97,7 @@ The case study challenge was to build a simple web app that:
 - Rich design tooling (filters, complex masks, arbitrary transforms)
 - Complex asset management, authentication, or collaboration features
 
-<a id="user-journey"></a>
-### User Journey
+### 🗺️ User Journey
 
 **Primary Happy User Journey**:
 
@@ -115,27 +108,23 @@ The case study challenge was to build a simple web app that:
 5. User generates a variant that stays on-brand but changes layout/positions
 6. User exports to JPG and/or vector PDF
 
-<a id="user-stories--acceptance-criteria"></a>
-### User Stories & Acceptance Criteria
+### 🧩 User Stories & Acceptance Criteria
 
-<a id="1-deterministic-layout-generation"></a>
-#### 1. Deterministic Layout Generation
+#### 🎯 1. Deterministic Layout Generation
 **As a marketer**, I can input a short prompt to get a deterministic, on-brand 1080×1080 layout.
 
 **Acceptance Criteria**:
 - Same prompt + same variant → identical plan JSON and visual
 - Plan is visible and machine-readable via "View plan" toggle
 
-<a id="2-visible-layout-plan"></a>
-#### 2. Visible Layout Plan
+#### 🧾 2. Visible Layout Plan
 **As a marketer**, I can toggle "View plan" to see a machine-readable schema of elements and exact positions.
 
 **Acceptance Criteria**:
 - Plan lists all elements (type, text/logo/image, x/y, w/h, z-index, font/color)
 - Plan matches the rendered visual exactly
 
-<a id="3-constrained-editing"></a>
-#### 3. Constrained Editing
+#### ✏️ 3. Constrained Editing
 **As a marketer**, I can lightly edit text and logo by moving/resizing within sensible bounds.
 
 **Acceptance Criteria**:
@@ -144,8 +133,7 @@ The case study challenge was to build a simple web app that:
 - Logo aspect ratio is preserved
 - Movement snaps to a 16px grid for alignment
 
-<a id="4-chat-driven-refinement"></a>
-#### 4. Chat-Driven Refinement
+#### 💬 4. Chat-Driven Refinement
 **As a marketer**, I can refine via chat (e.g., "move logo top-left") and see the plan update deterministically.
 
 **Acceptance Criteria**:
@@ -153,8 +141,7 @@ The case study challenge was to build a simple web app that:
 - Plan and render stay in sync
 - Same refinement command → same result every time
 
-<a id="5-on-brand-variant-generation"></a>
-#### 5. On-Brand Variant Generation
+#### 🎲 5. On-Brand Variant Generation
 **As a marketer**, I can generate a variant that's different but on-brand.
 
 **Acceptance Criteria**:
@@ -162,8 +149,7 @@ The case study challenge was to build a simple web app that:
 - Brand tokens (colors, fonts, logo constraints) are never violated
 - Variant maintains professional appearance
 
-<a id="6-vector-accurate-export"></a>
-#### 6. Vector-Accurate Export
+#### 📤 6. Vector-Accurate Export
 **As a marketer**, I can export to JPG and vector PDF while keeping text/shapes vector where feasible.
 
 **Acceptance Criteria**:
@@ -173,13 +159,11 @@ The case study challenge was to build a simple web app that:
 
 ---
 
-<a id="design-decisions--rationale"></a>
-## <img alt="lightbulb icon" style="width:18px;height:18px;vertical-align:-3px;margin-right:8px;" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 3a6 6 0 0 1 6 6c0 2.2-1.2 4.1-3 5.2v1.8H9v-1.8c-1.8-1.1-3-3-3-5.2a6 6 0 0 1 6-6z' fill='none' stroke='%230a0a0b' stroke-width='2'/><rect x='9' y='16' width='6' height='2' fill='none' stroke='%230a0a0b' stroke-width='2'/><rect x='10' y='18' width='4' height='2' fill='none' stroke='%230a0a0b' stroke-width='2'/></svg>"> Design Decisions & Rationale
+## 💡 Design Decisions & Rationale
 
 During the case study development, five key problems emerged that required deliberate design decisions:
 
-<a id="1-deterministic-chat-to-plan-parsing"></a>
-### 1. Deterministic Chat-to-Plan Parsing
+### 🧠 1. Deterministic Chat-to-Plan Parsing
 
 **The Problem**:  
 Locking parsing to temperature 0 and a small set of presets can feel rigid and may under-interpret nuanced prompts.
@@ -196,8 +180,7 @@ Use fixed layout presets (Variant A/B/C) + LLM at temperature 0 only to clean/st
 **Trade-off Accepted**:  
 I sacrifice some creative interpretation for determinism, but gain reliability and ease of testing.
 
-<a id="2-strict-on-brand-enforcement-openai"></a>
-### 2. Strict On-Brand Enforcement (OpenAI)
+### 🔒 2. Strict On-Brand Enforcement (OpenAI)
 
 **The Problem**:  
 Enforcing logo, palette, and fonts strictly limits creative freedom and may reject user-specified styles.
@@ -215,8 +198,7 @@ I limit creative freedom, but ensure every output is brand-compliant and profess
 
 **Note**: Initially considered Anthropic as the brand, but switched to OpenAI due to simpler design language and cleaner aesthetic that better suited a demo.
 
-<a id="3-constrained-editing-with-konvajs"></a>
-### 3. Constrained Editing with Konva.js
+### 🖼️ 3. Constrained Editing with Konva.js
 
 **The Problem**:  
 Light, bounded move/resize (logo/text only) will feel limited compared to full design tools; complex transforms and effects are out.
@@ -235,8 +217,7 @@ I limit editing capabilities, but ensure edits never break the layout or violate
 
 **Technical Note**: Initially considered Fabric.js, but switched to Konva.js for better React integration and simpler canvas management.
 
-<a id="4-vector-export-fidelity-jpg--pdf"></a>
-### 4. Vector Export Fidelity (JPG + PDF)
+### 📄 4. Vector Export Fidelity (JPG + PDF)
 
 **The Problem**:  
 Converting canvas content to a vector PDF while preserving text/shapes is tricky; mixed raster/vector pipelines can introduce inconsistencies.
@@ -252,8 +233,7 @@ Render on canvas (Konva); export JPG via canvas; export PDF via canvas to SVG �
 **Trade-off Accepted**:  
 I accept some complexity in the export pipeline, but gain professional-grade outputs without generative models.
 
-<a id="5-edge-proxy-for-llm-on-vercel"></a>
-### 5. Edge Proxy for LLM on Vercel
+### ⚡ 5. Edge Proxy for LLM on Vercel
 
 **The Problem**:  
 Adding a tiny Node route increases deployment complexity and can introduce latency or failure points.
@@ -272,11 +252,9 @@ I add deployment complexity, but gain security, cost control, and better separat
 
 ---
 
-<a id="technical-implementation"></a>
-## <img alt="code icon" style="width:18px;height:18px;vertical-align:-3px;margin-right:8px;" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><polyline points='7,8 3,12 7,16' fill='none' stroke='%230a0a0b' stroke-width='2' /><polyline points='17,8 21,12 17,16' fill='none' stroke='%230a0a0b' stroke-width='2' /></svg>"> Technical Implementation
+## 🛠️ Technical Implementation
 
-<a id="architecture"></a>
-### Architecture
+### 🏗️ Architecture
 
 ```
 ┌─────────────┐
@@ -306,8 +284,7 @@ I add deployment complexity, but gain security, cost control, and better separat
          └─────────────────┘
 ```
 
-<a id="key-components"></a>
-### Key Components
+### 🧱 Key Components
 
 #### `/src/app/api/parse/route.ts`
 - Edge route for OpenAI API calls
@@ -337,8 +314,7 @@ I add deployment complexity, but gain security, cost control, and better separat
 - PDF export (canvas to SVG to PDF via pdf-lib)
 - Vector preservation for text/shapes
 
-<a id="determinism-guarantees"></a>
-### Determinism Guarantees
+### 🔁 Determinism Guarantees
 
 The system ensures reproducibility through:
 
@@ -355,8 +331,7 @@ The system ensures reproducibility through:
 
 ---
 
-<a id="features"></a>
-## <img alt="star icon" style="width:18px;height:18px;vertical-align:-3px;margin-right:8px;" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><polygon points='12,2 15,9 22,9 17,13 19,20 12,16 5,20 7,13 2,9 9,9' fill='none' stroke='%230a0a0b' stroke-width='2'/></svg>"> Features
+## ⭐ Features
 
 - ✨ **Deterministic Design Generation**: Same prompt + variant → identical layout
 - 🎨 **Three Layout Presets**: Variant A (headline-dominant), B (image-dominant), C (split layout)
@@ -372,11 +347,9 @@ The system ensures reproducibility through:
   
 ---
 
-<a id="usage-guide"></a>
-## <img alt="book icon" style="width:18px;height:18px;vertical-align:-3px;margin-right:8px;" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 6v12' fill='none' stroke='%230a0a0b' stroke-width='2'/><path d='M12 6c-3-1-6-1-9 0v12c3-1 6-1 9 0' fill='none' stroke='%230a0a0b' stroke-width='2'/><path d='M12 6c3-1 6-1 9 0v12c-3-1-6-1-9 0' fill='none' stroke='%230a0a0b' stroke-width='2'/></svg>"> Usage Guide
+## 📖 Usage Guide
 
-<a id="creating-a-design"></a>
-### Creating a Design
+### 🖌️ Creating a Design
 
 1. Type a prompt describing your design in the chat interface, e.g.:
    - "I need a LinkedIn visual for event XY"
@@ -390,8 +363,7 @@ The system ensures reproducibility through:
    - Generate a deterministic layout plan for Variant A, Variant B and Variant C
    - Render the design on a 1080×1080 canvas
 
-<a id="refining-designs"></a>
-### Refining Designs
+### 🔧 Refining Designs
 
 After a design is created, you can refine it with natural language commands:
 
@@ -402,8 +374,7 @@ After a design is created, you can refine it with natural language commands:
 
 The system will parse your command and update both the plan and the render deterministically.
 
-<a id="canvas-editing"></a>
-### Canvas Editing
+### 🖼️ Canvas Editing
 
 Click on elements (logo, headline, subheadline) to select them, then:
 
@@ -416,8 +387,7 @@ Click on elements (logo, headline, subheadline) to select them, then:
 
 Edits are immediately reflected in the plan object.
 
-<a id="exporting"></a>
-### Exporting
+### ⬇️ Exporting
 
 - **Export JPG**: Click "Export JPG" to download a high-resolution 1080×1080 JPEG
 - **Export PDF**: Click "Export PDF" to download a vector PDF (text/shapes remain vector, images rasterized)
@@ -425,8 +395,7 @@ Edits are immediately reflected in the plan object.
 
 ---
 
-<a id="brand-guidelines"></a>
-## <img alt="palette icon" style="width:18px;height:18px;vertical-align:-3px;margin-right:8px;" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='9' fill='none' stroke='%230a0a0b' stroke-width='2'/><circle cx='8' cy='10' r='1.3' fill='%230a0a0b'/><circle cx='10.5' cy='7' r='1.3' fill='%230a0a0b'/><circle cx='14' cy='8' r='1.3' fill='%230a0a0b'/><circle cx='16' cy='11' r='1.3' fill='%230a0a0b'/></svg>"> Brand Guidelines
+## 🎨 Brand Guidelines
 
 The system is locked to **OpenAI** branding with comprehensive brand identity:
 
@@ -439,8 +408,7 @@ The system is locked to **OpenAI** branding with comprehensive brand identity:
 - **Visual Style**: Minimalist, sophisticated, modern with generous white space
 - **Backgrounds**: Three gradient variants (A, B, C) available for variety
 
-<a id="adding-more-brand-information"></a>
-### Adding More Brand Information
+### ➕ Adding More Brand Information
 
 To enhance brand consistency, edit:
 - `src/brand/tokens.ts` - Add colors, fonts, logo URL
@@ -450,8 +418,7 @@ See `src/brand/README.md` for detailed instructions on extending the brand syste
 
 ---
 
-<a id="project-structure"></a>
-## <img alt="folder icon" style="width:18px;height:18px;vertical-align:-3px;margin-right:8px;" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3 6h6l2 2h10v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z' fill='none' stroke='%230a0a0b' stroke-width='2'/></svg>"> Project Structure
+## 🗂️ Project Structure
 
 ```
 arcai/
@@ -492,15 +459,13 @@ arcai/
 
 ---
 
-<a id="development-timeline"></a>
-## <img alt="calendar icon" style="width:18px;height:18px;vertical-align:-3px;margin-right:8px;" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='3' y='5' width='18' height='16' rx='2' fill='none' stroke='%230a0a0b' stroke-width='2'/><line x1='3' y1='9' x2='21' y2='9' stroke='%230a0a0b' stroke-width='2'/><line x1='8' y1='3' x2='8' y2='7' stroke='%230a0a0b' stroke-width='2'/><line x1='16' y1='3' x2='16' y2='7' stroke='%230a0a0b' stroke-width='2'/></svg>"> Development Timeline
+## 🗓️ Development Timeline
 
 **Initial Planning & Analysis**: 2.10 hours  
 **Development Time**: 5 hours  
 **Total Case Study Time**: ~7 hours
 
-<a id="development-phases"></a>
-### Development Phases
+### ⚙️ Development Phases
 
 1. **Problem Analysis** (2.10h)
    - Understanding the case study requirements
@@ -521,8 +486,7 @@ arcai/
    - Caching system
    - Deployment to Vercel
 
-<a id="key-challenges-overcome"></a>
-### Key Challenges Overcome
+### 🚧 Key Challenges Overcome
 
 - **Determinism**: Ensuring same prompt → same output required careful control of LLM temperature and preset-based positioning
 - **Brand Enforcement**: Implementing hard locks on colors, fonts, and logo constraints while maintaining UX
@@ -532,8 +496,7 @@ arcai/
 
 ---
 
-<a id="future-enhancements-out-of-scope"></a>
-## <img alt="beaker icon" style="width:18px;height:18px;vertical-align:-3px;margin-right:8px;" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 3h12' fill='none' stroke='%230a0a0b' stroke-width='2'/><path d='M8 3l4 8v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8l4-8z' fill='none' stroke='%230a0a0b' stroke-width='2'/><line x1='10' y1='11' x2='14' y2='11' stroke='%230a0a0b' stroke-width='2'/></svg>"> Future Enhancements (Out of Scope)
+## 🔭 Future Enhancements (Out of Scope)
 
 While these features were explicitly out of scope for the case study, potential future enhancements could include:
 
